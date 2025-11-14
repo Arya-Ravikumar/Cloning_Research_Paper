@@ -1,74 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Survey Results</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
-    h1 {
-      margin-bottom: 30px;
-    }
-
-    .chart-container {
-      width: 90%;
-      max-width: 600px;
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      margin-bottom: 40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey Results</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background: #f7f7f7;
+padding: 40px 20px;
+}
+h1 {
+text-align: center;
+margin-bottom: 30px;
+}
+.chart-container {
+width: 90%;
+max-width: 650px;
+background: white;
+padding: 20px;
+border-radius: 16px;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+margin: 30px auto;
+}
+.image-row {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 15px;
+margin-bottom: 40px;
+}
+.image-row img {
+width: 200px;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+</style>
 </head>
 <body>
 
-  <h1>Survey Results</h1>
 
-  <div class="chart-container">
-    <canvas id="surveyChart"></canvas>
-  </div>
+<h1>Survey Results</h1>
 
-  <!-- IMPORTANT: Use the local chart.js file -->
-  <script src="chart.js"></script>
 
-  <script>
-    const ctx = document.getElementById('surveyChart').getContext('2d');
+<div class="image-row">
+<img src="pig.jpg" alt="Pig" />
+<img src="sheep.jpg" alt="Sheep" />
+<img src="naur.jpg" alt="Naur" />
+<img src="dog.jpg" alt="Dog" />
+</div>
 
-    const data = {
-      labels: ['Yes', 'No', 'Maybe', 'Unopposed'],
-      datasets: [{
-        label: 'Responses',
-        data: [7, 1, 7, 2],  // Your exact numbers
-        borderWidth: 2
-      }]
-    };
 
-    const config = {
-      type: 'bar',
-      data: data,
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { stepSize: 1 }
-          }
-        }
-      }
-    };
+<div class="chart-container">
+<h2>Should Animals Be Cloned?</h2>
+<canvas id="cloneChart"></canvas>
+</div>
 
-    new Chart(ctx, config);
-  </script>
+
+<div class="chart-container">
+<h2>Is Cloning Humane?</h2>
+<canvas id="humaneChart"></canvas>
+</div>
+
+
+<div class="chart-container">
+<h2>Normal vs Cloned (All Animals Combined)</h2>
+<canvas id="normalClonedChart"></canvas>
+</div>
+
+
+<script src="chart.js"></script>
+<script>
+// Data YOU provided
+const cloneCounts = { Yes: 7, No: 1, Maybe: 7, Unopposed: 2 };
+const humaneCounts = { Yes: 11, No: 6 };
+const normalClonedCounts = { Normal: 38, Cloned: 30 };
+
+
+function toPercent(counts) {
+const total = Object.values(counts).reduce((a,b)=>a+b,0);
+return Object.fromEntries(
+Object.entries(counts).map(([k,v]) => [k, ((v/total)*100).toFixed(1)])
+);
+}
+
+
+const clonePct = toPercent(cloneCounts);
+const humanePct = toPercent(humaneCounts);
+const normalClonedPct = toPercent(normalClonedCounts);
+
+
+function makeChart(id, type, labels, data) {
+new Chart(document.getElementById(id), {
+type: type,
+data: {
+labels: labels,
+datasets: [{ data: data, borderWidth: 2 }]
+},
+options: { responsive: true }
+});
+}
+
+
+makeChart('cloneChart', 'bar', Object.keys(clonePct), Object.values(clonePct));
+makeChart('humaneChart', 'pie', Object.keys(humanePct), Object.values(humanePct));
+makeChart('normalClonedChart', 'pie', Object.keys(normalClonedPct), Object.values(normalClonedPct));
+</script>
+
 
 </body>
 </html>

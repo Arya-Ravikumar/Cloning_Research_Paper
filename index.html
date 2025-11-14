@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Results</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .chart-container {
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Survey Results</h1>
+
+  <div class="chart-container">
+    <canvas id="surveyChart"></canvas>
+  </div>
+
+  <!-- IMPORTANT: Use the local chart.js file -->
+  <script src="chart.js"></script>
+
+  <script>
+    const ctx = document.getElementById('surveyChart').getContext('2d');
+
+    const data = {
+      labels: ['Yes', 'No', 'Maybe', 'Unopposed'],
+      datasets: [{
+        label: 'Responses',
+        data: [7, 1, 7, 2],  // Your exact numbers
+        borderWidth: 2
+      }]
+    };
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    };
+
+    new Chart(ctx, config);
+  </script>
+
+</body>
+</html>

@@ -1,187 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Survey Results</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cloning Survey — Results</title>
+
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
-  padding: 40px 20px;
-}
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-}
-.chart-section {
-  width: 95%;
-  max-width: 900px;
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin: 40px auto;
-}
-.section-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.section-row img {
-  width: 250px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-canvas {
-  max-width: 500px;
-}
-.data-box {
-  background: #fafafa;
-  padding: 15px;
-  border-left: 4px solid #0077cc;
-  border-radius: 8px;
-  margin-top: 20px;
-}
-.footer {
-  text-align: center;
-  margin-top: 60px;
-  font-size: 14px;
-  opacity: 0.8;
-}
+  :root{
+    --bg: #0b0f14;
+    --card: #0f1720;
+    --muted: #94a3b8;
+    --accent: #6ee7b7;
+    --accent2: #60a5fa;
+    --text: #e6eef6;
+    --panel: #0b1220;
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#05060a 0%, #071225 100%);color:var(--text);font-family:Inter, Roboto, Arial, sans-serif;}
+  .wrap{max-width:1100px;margin:28px auto;padding:20px;}
+  header{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;}
+  h1{margin:0;font-size:28px;}
+  .lead{color:var(--muted);margin-top:6px;font-size:13px;max-width:760px}
+  .methods{background:var(--card);padding:14px;border-radius:12px;margin:18px 0;border:1px solid rgba(255,255,255,0.03)}
+  .methods h3{margin:0 0 8px 0;font-size:16px}
+  .methods .editable{color:var(--text);font-size:14px;line-height:1.4}
+  .grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:6px}
+  /* card for charts + image */
+  .chart-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .left{min-width:240px;flex:0 0 280px;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .left img{width:240px;height:160px;object-fit:cover;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.03)}
+  .right{flex:1;min-width:240px}
+  canvas{width:100% !important;max-height:300px}
+  .data-analysis{background:var(--panel);padding:12px;border-radius:10px;margin-top:12px;border-left:3px solid rgba(96,165,250,0.14)}
+  .data-analysis h4{margin:0 0 8px 0;color:var(--accent2)}
+  .editable-area{min-height:54px;color:var(--text);font-size:14px;line-height:1.45;outline:none}
+  footer{margin:36px 0 12px 0;text-align:center;color:var(--muted);font-size:13px}
+  .meta{margin-top:6px;color:var(--muted);font-size:13px}
+  /* smaller screens */
+  @media (max-width:880px){
+    .left{flex-basis:100%;display:flex;align-items:center}
+    .right{flex-basis:100%}
+    .chart-card{flex-direction:column;align-items:stretch}
+    .lead{max-width:100%}
+  }
 </style>
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Cloning Survey — Results</h1>
+        <div class="lead">Public dashboard of a student-led survey on public opinions about animal cloning. Charts show percentage responses; hover any slice/bar for the percentage value.</div>
+        <div class="meta">Created by <strong>Arya Ravikumar</strong> — Cloning Survey Research Project™</div>
+      </div>
+    </header>
 
-<h1>Survey Results</h1>
+    <!-- METHODS / BLURB (editable) -->
+    <section class="methods" aria-label="Methods">
+      <h3>Study Overview & Methods</h3>
+      <div class="editable editable-area" id="methods" contenteditable="true">
+        This survey asked participants whether they believed animals should be cloned, whether cloning is humane, and whether specific animal photos were of normal or cloned animals. Participants were shown four pictures (pig, sheep, naur, dog) and answered a short set of multiple-choice questions. Data was collected anonymously via an in-person/online questionnaire. (Edit this paragraph to describe your exact process.)
+      </div>
+    </section>
 
-<!-- CLONING QUESTION -->
-<div class="chart-section">
-  <h2>Should Animals Be Cloned?</h2>
-  <div class="section-row">
-    <canvas id="cloneChart"></canvas>
-  </div>
-  <div class="data-box">
-    <!-- ANALYSIS FOR THIS SECTION -->
-  </div>
-</div>
+    <main class="grid">
 
-<!-- HUMANE QUESTION -->
-<div class="chart-section">
-  <h2>Is Cloning Humane?</h2>
-  <div class="section-row">
-    <canvas id="humaneChart"></canvas>
-  </div>
-  <div class="data-box">
-  </div>
-</div>
+      <!-- Question: Should Animals Be Cloned -->
+      <section class="chart-card">
+        <div class="left" aria-hidden="true">
+          <!-- no image for generic Q -->
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Clipboard_2.svg/480px-Clipboard_2.svg.png" alt="Survey" style="filter:grayscale(0.2) brightness(.95)" />
+          <div style="color:var(--muted);font-size:13px">Overall question</div>
+        </div>
+        <div class="right">
+          <h3 style="margin-top:0;color:var(--accent)">Should animals be cloned?</h3>
+          <canvas id="cloneChart"></canvas>
+          <div class="data-analysis">
+            <h4>Data Analysis</h4>
+            <div class="editable editable-area" id="analysis_clone" contenteditable="true">
+              <!-- sample: -->
+              7 respondents answered "Yes" (x%), 7 answered "Maybe", 1 "No", 2 "Unopposed". Summarize any trends here.
+            </div>
+          </div>
+        </div>
+      </section>
 
-<!-- ALL ANIMALS COMBINED -->
-<div class="chart-section">
-  <h2>Normal vs Cloned (All Animals Combined)</h2>
-  <div class="section-row">
-    <canvas id="normalClonedChart"></canvas>
-  </div>
-  <div class="data-box">
-  </div>
-</div>
+      <!-- Question: Is cloning humane -->
+      <section class="chart-card">
+        <div class="left" aria-hidden="true">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Scale_of_justice.svg/480px-Scale_of_justice.svg.png" alt="Humane" style="filter:grayscale(0.15) brightness(.9)" />
+          <div style="color:var(--muted);font-size:13px">Ethics question</div>
+        </div>
+        <div class="right">
+          <h3 style="margin-top:0;color:var(--accent)">Is cloning animals humane?</h3>
+          <canvas id="humaneChart"></canvas>
+          <div class="data-analysis">
+            <h4>Data Analysis</h4>
+            <div class="editable editable-area" id="analysis_humane" contenteditable="true">
+              11 respondents said cloning is humane, while 6 said it is not. Add notes about sample size, bias, or caveats.
+            </div>
+          </div>
+        </div>
+      </section>
 
-<!-- PIG SECTION -->
-<div class="chart-section">
-  <h2>Pig: Normal vs Cloned</h2>
-  <div class="section-row">
-    <img src="pig.jpg" alt="Pig" />
-    <canvas id="pigChart"></canvas>
-  </div>
-  <div class="data-box"></div>
-</div>
+      <!-- All combined normal vs cloned -->
+      <section class="chart-card">
+        <div class="left" aria-hidden="true">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Venn_diagram_circles.svg/480px-Venn_diagram_circles.svg.png" alt="Combined" style="filter:grayscale(0.15) brightness(.9)" />
+          <div style="color:var(--muted);font-size:13px">All photos</div>
+        </div>
+        <div class="right">
+          <h3 style="margin-top:0;color:var(--accent)">Normal vs Cloned — Combined</h3>
+          <canvas id="normalClonedChart"></canvas>
+          <div class="data-analysis">
+            <h4>Data Analysis</h4>
+            <div class="editable editable-area" id="analysis_combined" contenteditable="true">
+              Combined totals: Normal vs Cloned across all photos. Comment on overall detection accuracy or respondent bias here.
+            </div>
+          </div>
+        </div>
+      </section>
 
-<!-- SHEEP SECTION -->
-<div class="chart-section">
-  <h2>Sheep: Normal vs Cloned</h2>
-  <div class="section-row">
-    <img src="sheep.jpg" alt="Sheep" />
-    <canvas id="sheepChart"></canvas>
-  </div>
-  <div class="data-box"></div>
-</div>
+      <!-- Pig -->
+      <section class="chart-card">
+        <div class="left">
+          <img src="pig.jpg" alt="Pig photo (shown to participants)">
+          <div style="color:var(--muted);font-size:13px">Pig (shown in survey)</div>
+        </div>
+        <div class="right">
+          <h3 style="margin-top:0;color:var(--accent)">Pig — Normal vs Cloned</h3>
+          <canvas id="pigChart"></canvas>
+          <div class="data-analysis">
+            <h4>Data Analysis</h4>
+            <div class="editable editable-area" id="analysis_pig" contenteditable="true">
+              Replace with analysis for the pig image (e.g., detection accuracy, what respondents wrote, implications).
+            </div>
+          </div>
+        </div>
+      </section>
 
-<!-- NAUR SECTION -->
-<div class="chart-section">
-  <h2>Naur: Normal vs Cloned</h2>
-  <div class="section-row">
-    <img src="naur.jpg" alt="Naur" />
-    <canvas id="naurChart"></canvas>
-  </div>
-  <div class="data-box"></div>
-</div>
+      <!-- Sheep -->
+      <section class="chart-card">
+        <div class="left">
+          <img src="sheep.jpg" alt="Sheep photo (shown to participants)">
+          <div style="color:var(--muted);font-size:13px">Sheep (shown in survey)</div>
+        </div>
+        <div class="right">
+          <h3 style="margin-top:0;color:var(--accent)">Sheep — Normal vs Cloned</h3>
+          <canvas id="sheepChart"></canvas>
+          <div class="data-analysis">
+            <h4>Data Analysis</h4>
+            <div class="editable editable-area" id="analysis_sheep" contenteditable="true">
+            </div>
+          </div>
+        </div>
+      </section>
 
-<!-- DOG SECTION -->
-<div class="chart-section">
-  <h2>Dog: Normal vs Cloned</h2>
-  <div class="section-row">
-    <img src="dog.jpg" alt="Dog" />
-    <canvas id="dogChart"></canvas>
-  </div>
-  <div class="data-box"></div>
-</div>
+      <!-- Naur -->
+      <section class="chart-card">
+        <div class="left">
+          <img src="naur.jpg" alt="Naur photo (shown to participants)">
+          <div style="color:var(--muted);font-size:13px">Naur (shown in survey)</div>
+        </div>
+        <div class="right">
+          <h3 style="margin-top:0;color:var(--accent)">Naur — Normal vs Cloned</h3>
+          <canvas id="naurChart"></canvas>
+          <div class="data-analysis">
+            <h4>Data Analysis</h4>
+            <div class="editable editable-area" id="analysis_naur" contenteditable="true">
+            </div>
+          </div>
+        </div>
+      </section>
 
-<div class="footer">
-  This website was created by <b>Arya Ravikumar</b><br>
-  Under the <b>Cloning Survey Research Project™</b>
-</div>
+      <!-- Dog -->
+      <section class="chart-card">
+        <div class="left">
+          <img src="dog.jpg" alt="Dog photo (shown to participants)">
+          <div style="color:var(--muted);font-size:13px">Dog (shown in survey)</div>
+        </div>
+        <div class="right">
+          <h3 style="margin-top:0;color:var(--accent)">Dog — Normal vs Cloned</h3>
+          <canvas id="dogChart"></canvas>
+          <div class="data-analysis">
+            <h4>Data Analysis</h4>
+            <div class="editable editable-area" id="analysis_dog" contenteditable="true">
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div style="color:var(--muted)">This website was created by <strong>Arya Ravikumar</strong></div>
+      <div style="margin-top:6px;color:var(--muted)"><strong>Cloning Survey Research Project™</strong></div>
+    </footer>
+  </div>
 
 <script>
-// MAIN SURVEY DATA
-const cloneCounts = { Yes: 7, No: 1, Maybe: 7, Unopposed: 2 };
-const humaneCounts = { Yes: 11, No: 6 };
-const normalClonedCounts = { Normal: 38, Cloned: 30 };
+document.addEventListener('DOMContentLoaded', function(){
 
-// INDIVIDUAL ANIMAL DATA
-const animalCounts = {
-  pig: { Normal: 14, Cloned: 4 },
-  sheep: { Normal: 15, Cloned: 3 },
-  naur: { Normal: 12, Cloned: 6 },
-  dog: { Normal: 17, Cloned: 1 }
-};
+  // MAIN SURVEY DATA (counts)
+  const cloneCounts = { Yes: 7, No: 1, Maybe: 7, Unopposed: 2 };
+  const humaneCounts = { Yes: 11, No: 6 };
+  const normalClonedCounts = { Normal: 38, Cloned: 30 };
 
-function toPercent(counts) {
-  const total = Object.values(counts).reduce((a,b)=>a+b,0);
-  return Object.fromEntries(
-    Object.entries(counts).map(([k,v]) => [k, ((v/total)*100).toFixed(1)])
-  );
-}
+  // INDIVIDUAL ANIMAL DATA (you provided)
+  const animalCounts = {
+    pig:   { Normal: 14, Cloned: 4 },
+    sheep: { Normal: 15, Cloned: 3 },
+    naur:  { Normal: 12, Cloned: 6 },
+    dog:   { Normal: 17, Cloned: 1 }
+  };
 
-function makeChart(id, type, labels, data) {
-  new Chart(document.getElementById(id), {
-    type: type,
-    data: {
-      labels: labels,
-      datasets: [{ data: data, borderWidth: 2 }]
-    },
-    options: { responsive: true }
-  });
-}
+  // convert counts -> numeric percentages
+  function toPercentNumbers(counts) {
+    const total = Object.values(counts).reduce((a,b)=>a+b,0) || 1;
+    return Object.fromEntries(Object.entries(counts).map(([k,v]) => [k, Number(((v/total)*100).toFixed(1))]));
+  }
 
-// Main percentages
-const clonePct = toPercent(cloneCounts);
-const humanePct = toPercent(humaneCounts);
-const normalClonedPct = toPercent(normalClonedCounts);
+  // create chart with percent tooltips & percent y-axis for bars
+  function makeChart(id, type, labels, data) {
+    const ctx = document.getElementById(id).getContext('2d');
+    const isBar = type === 'bar';
+    new Chart(ctx, {
+      type: type,
+      data: {
+        labels: labels,
+        datasets: [{
+          label: isBar ? 'Percent (%)' : '',
+          data: data,
+          backgroundColor: labels.map((_,i)=>[
+            'rgba(96,165,250,0.9)',
+            'rgba(99,102,241,0.9)',
+            'rgba(34,197,94,0.85)',
+            'rgba(249,115,22,0.85)'
+          ][i % 4]),
+          borderColor: labels.map((_,i)=> 'rgba(255,255,255,0.06)'),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive:true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(ctx){
+                const v = ctx.parsed.y ?? ctx.parsed;
+                return `${v}%`;
+              }
+            }
+          },
+          legend: { display: false }
+        },
+        scales: {
+          y: isBar ? {
+            beginAtZero:true,
+            max:100,
+            ticks: {
+              callback: function(value){ return value + '%'; }
+            }
+          } : {}
+        }
+      }
+    });
+  }
 
-// Render main charts
-makeChart('cloneChart', 'bar', Object.keys(clonePct), Object.values(clonePct));
-makeChart('humaneChart', 'pie', Object.keys(humanePct), Object.values(humanePct));
-makeChart('normalClonedChart', 'pie', Object.keys(normalClonedPct), Object.values(normalClonedPct));
+  // render main charts
+  makeChart('cloneChart', 'bar', Object.keys(toPercentNumbers(cloneCounts)), Object.values(toPercentNumbers(cloneCounts)));
+  makeChart('humaneChart', 'pie', Object.keys(toPercentNumbers(humaneCounts)), Object.values(toPercentNumbers(humaneCounts)));
+  makeChart('normalClonedChart', 'pie', Object.keys(toPercentNumbers(normalClonedCounts)), Object.values(toPercentNumbers(normalClonedCounts)));
 
-// Render individual animal charts
-for (const [animal, counts] of Object.entries(animalCounts)) {
-  const pct = toPercent(counts);
-  makeChart(`${animal}Chart`, 'pie', Object.keys(pct), Object.values(pct));
-}
+  // individual animals
+  makeChart('pigChart', 'pie', Object.keys(toPercentNumbers(animalCounts.pig)), Object.values(toPercentNumbers(animalCounts.pig)));
+  makeChart('sheepChart', 'pie', Object.keys(toPercentNumbers(animalCounts.sheep)), Object.values(toPercentNumbers(animalCounts.sheep)));
+  makeChart('naurChart', 'pie', Object.keys(toPercentNumbers(animalCounts.naur)), Object.values(toPercentNumbers(animalCounts.naur)));
+  makeChart('dogChart', 'pie', Object.keys(toPercentNumbers(animalCounts.dog)), Object.values(toPercentNumbers(animalCounts.dog)));
+
+});
 </script>
-
 </body>
 </html>

@@ -1,331 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloning Survey Research Project</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloning Survey Research Project</title>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0c0c;
+      --card: #161616;
+      --panel: #1e1e1e;
+      --muted: #93a4b8;
+      --text: #e6e6e6;
+      --accent: #00aaff;
+      --accent2: #60caff;
+    }
 
-<style>
-/* ---------------------------------------------------- */
-/* GLOBAL DARK MODE STYLING */
-/* ---------------------------------------------------- */
-body {
-    font-family: 'Inter', sans-serif;
-    background: #0c0c0c;
-    color: #e6e6e6;
-    margin: 0;
-    padding: 0;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
 
-/* Smooth page fade-in */
-body {
-    animation: fadeIn 1.2s ease-out forwards;
-    opacity: 0;
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeDown 1s ease-out;
+    }
 
-/* Header */
-header {
-    background: #141414;
-    padding: 40px;
-    text-align: center;
-    border-bottom: 3px solid #1e1e1e;
-    animation: slideDown 1s ease-out;
-}
-@keyframes slideDown {
-    from { transform: translateY(-40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
+    h1 {
+      margin: 0;
+      font-size: 2.8rem;
+    }
 
-h1 { font-size: 2.6rem; }
-.subtitle { color: #9f9f9f; }
+    .subtitle {
+      color: var(--muted);
+      margin-top: 8px;
+    }
 
-/* ---------------------------------------------------- */
-/* SECTION CONTAINERS */
-/* ---------------------------------------------------- */
-.section {
-    padding: 40px 20px;
-    max-width: 900px;
-    margin: auto;
-    line-height: 1.7;
-    animation: fadeUp 1s ease-out;
-}
-@keyframes fadeUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* ---------------------------------------------------- */
-/* CHART BLOCKS */
-/* ---------------------------------------------------- */
-.chart-block {
-    background: #161616;
-    padding: 30px;
-    border-radius: 18px;
-    margin: 40px auto;
-    max-width: 900px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.4);
-    animation: fadeUp 1s ease-out;
-}
+    .section {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px;
+      animation: fadeUp 1s ease-out;
+    }
 
-.chart-title {
-    font-size: 1.9rem;
-    text-align: center;
-    margin-bottom: 25px;
-}
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* Side-by-side layout */
-.flex-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    align-items: center;
-}
+    .chart-block {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 16px;
+      margin: 40px auto;
+      max-width: 900px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      animation: fadeUp 1s ease-out;
+    }
 
-/* ---------------------------------------------------- */
-/* IMAGE HOVER & ANIMATION */
-/* ---------------------------------------------------- */
-.flex-row img {
-    width: 240px;
-    border-radius: 14px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
+    .chart-title {
+      text-align: center;
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+    }
 
-.flex-row img:hover {
-    transform: scale(1.06);
-    box-shadow: 0 0 18px rgba(0, 200, 255, 0.4);
-}
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
 
-/* ---------------------------------------------------- */
-/* CHART HOVER EFFECT */
-/* ---------------------------------------------------- */
-canvas {
-    transition: transform 0.25s ease, filter 0.25s ease;
-}
+    .flex-row img {
+      width: 220px;
+      border-radius: 12px;
+      object-fit: cover;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    }
 
-canvas:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 10px #00aaff);
-}
+    .flex-row img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px var(--accent);
+    }
 
-/* ---------------------------------------------------- */
-/* ANALYSIS BOX */
-/* ---------------------------------------------------- */
-.analysis-box {
-    background: #1e1e1e;
-    border-left: 4px solid #00aaff;
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 10px;
-    animation: fadeUp 1s ease-out;
-}
+    canvas {
+      max-width: 500px;
+      transition: transform 0.25s, filter 0.25s;
+    }
 
-/* ---------------------------------------------------- */
-/* FOOTER */
-/* ---------------------------------------------------- */
-footer {
-    margin-top: 80px;
-    padding: 25px;
-    text-align: center;
-    background: #111;
-    color: #8a8a8a;
-    border-top: 2px solid #1e1e1e;
-}
-</style>
+    canvas:hover {
+      transform: scale(1.03);
+      filter: drop-shadow(0 0 10px var(--accent));
+    }
+
+    .analysis-box {
+      background: var(--panel);
+      padding: 18px;
+      margin-top: 20px;
+      border-left: 4px solid var(--accent2);
+      border-radius: 10px;
+      animation: fadeUp 1s ease-out;
+    }
+
+    .analysis-box h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .editable-area {
+      min-height: 60px;
+      outline: none;
+      color: var(--text);
+    }
+
+    /* Carousel styles */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--card);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      padding: 10px;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .carousel-nav button {
+      background: rgba(0, 170, 255, 0.6);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .carousel-nav button:hover {
+      background: var(--accent);
+    }
+
+    /* Rotating quotes */
+    .quotes-section {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: var(--card);
+      border-radius: 16px;
+      text-align: center;
+      position: relative;
+      color: var(--text);
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      animation: fadeUp 1s ease-out;
+    }
+
+    .quote {
+      display: none;
+      font-style: italic;
+      font-size: 1.2rem;
+    }
+
+    .quote.active {
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-    <h1>Cloning Survey Research Project</h1>
-    <p class="subtitle">Public Perceptions of Animal Cloning — Data Collection & Analysis</p>
-</header>
+  <header>
+    <h1>Cloning Survey Research Project™</h1>
+    <p class="subtitle">Public Perceptions of Animal & Human Cloning</p>
+  </header>
 
-<!-- INTRO SECTION -->
-<div class="section">
-    <h2>Project Overview & Methodology</h2>
+  <!-- Method / Summary -->
+  <div class="section" id="methods">
+    <h2>Study Overview & Methodology</h2>
     <p>
-        This project explores public perception of animal cloning through a structured survey
-        including ethical questions and identification tasks involving images of real cloned
-        and naturally-born animals. Participants evaluated whether cloning should be allowed,
-        whether it is humane, and attempted to identify cloned vs. normal animals based on
-        images alone.
+      In this survey, participants were asked a set of questions to explore views on cloning.
+      First, they answered whether they think animals *should* be cloned and whether they believe
+      cloning is humane. Then, they were shown images of four animals — a pig, a sheep, a naur,
+      and a dog — and asked to identify each as “normal” or “cloned.” Finally, they were asked
+      whether cloning research should be expanded to humans. The survey was conducted anonymously,
+      and respondents came from a diverse background in terms of age, educational level, and prior
+      knowledge about genetic science.
     </p>
     <p>
-        Results are presented below with charts, visualizations, and written analysis. All data
-        has been manually calculated, converted into percentages, and presented with clarity and
-        transparency for research integrity.
+      Data was collected and categorized manually. Percentages were calculated to show
+      proportional opinion rather than raw counts. The analysis sections below include both
+      quantitative insights and interpretive commentary on what the data might suggest about public
+      understanding, biases, and ethical sentiment surrounding cloning.
     </p>
-</div>
+  </div>
 
-<!-------------------------------------------------------------->
-<!-- MAIN QUESTIONS -->
-<!-------------------------------------------------------------->
-
-<div class="chart-block">
+  <!-- Should we clone animals? -->
+  <div class="chart-block">
     <h2 class="chart-title">Should Animals Be Cloned?</h2>
     <div class="flex-row">
-        <canvas id="cloneChart" width="350" height="350"></canvas>
+      <canvas id="cloneChart"></canvas>
     </div>
     <div class="analysis-box">
-        <h3>Analysis</h3>
-        <p>
-            The majority of responses fall under “Yes” and “Maybe,” indicating uncertainty but
-            general openness toward cloning. Only a small minority expressed firm opposition.
-        </p>
+      <h3>Analysis</h3>
+      <div id="analysis_clone" class="editable-area" contenteditable="true">
+        Most participants lean toward “Yes” or “Maybe” when it comes to cloning animals, showing
+        openness to its potential but also some hesitance. The small “No” response hints at a
+        minority who are firmly against cloning, perhaps on ethical or biological grounds.
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="chart-block">
+  <!-- Is cloning humane? -->
+  <div class="chart-block">
     <h2 class="chart-title">Is Cloning Humane?</h2>
     <div class="flex-row">
-        <canvas id="humaneChart" width="350" height="350"></canvas>
+      <canvas id="humaneChart"></canvas>
     </div>
     <div class="analysis-box">
-        <h3>Analysis</h3>
-        <p>
-            The split between “Yes” and “No” suggests a moral debate among students, with many
-            unsure about the welfare implications of cloning.
-        </p>
+      <h3>Analysis</h3>
+      <div id="analysis_humane" class="editable-area" contenteditable="true">
+        A majority believe cloning can be humane, but a sizeable minority disagrees. This likely
+        reflects moral concerns about animal welfare and the unknown risks associated with cloning.
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="chart-block">
-    <h2 class="chart-title">Normal vs. Cloned (All Animals Combined)</h2>
+  <!-- Combined normal vs cloned (carousel + chart) -->
+  <div class="chart-block">
+    <h2 class="chart-title">Normal vs Cloned — All Animals</h2>
+
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="carousel-slide"><img src="pig.jpg" alt="Pig"></div>
+        <div class="carousel-slide"><img src="sheep.jpg" alt="Sheep"></div>
+        <div class="carousel-slide"><img src="naur.jpg" alt="Naur"></div>
+        <div class="carousel-slide"><img src="dog.jpg" alt="Dog"></div>
+      </div>
+      <div class="carousel-nav">
+        <button id="prevBtn">&#10094;</button>
+        <button id="nextBtn">&#10095;</button>
+      </div>
+    </div>
+
+    <div class="flex-row" style="margin-top: 30px;">
+      <canvas id="normalClonedChart"></canvas>
+    </div>
+
+    <div class="analysis-box">
+      <h3>Analysis</h3>
+      <div id="analysis_combined" class="editable-area" contenteditable="true">
+        When combining all species, a substantial share believed the animals were “normal” rather
+        than cloned, suggesting participants had difficulty identifying cloned animals visually.
+        This may point to general misunderstandings about how clones look — or to a perception
+        that clones are nearly identical to non-clones.
+      </div>
+    </div>
+  </div>
+
+  <!-- Individual animal charts -->
+
+  <div class="chart-block">
+    <h2 class="chart-title">Pig — Normal vs Cloned</h2>
     <div class="flex-row">
-        <canvas id="normalClonedChart" width="350" height="350"></canvas>
+      <img src="pig.jpg" alt="Pig">
+      <canvas id="pigChart"></canvas>
     </div>
     <div class="analysis-box">
-        <h3>Analysis</h3>
-        <p>
-            The difficulty identifying cloned animals visually suggests cloning does not produce
-            easily recognizable differences, challenging common misconceptions about cloning.
-        </p>
+      <h3>Analysis</h3>
+      <div id="analysis_pig" class="editable-area" contenteditable="true">
+        Since the pig was actually a normal (non-cloned) animal, the fact that most participants
+        guessed “normal” is encouraging. It suggests at least some ability to recognize typical
+        non-cloned characteristics.
+      </div>
     </div>
-</div>
+  </div>
 
-<!-------------------------------------------------------------->
-<!-- INDIVIDUAL ANIMAL CHARTS -->
-<!-------------------------------------------------------------->
-
-<div class="chart-block">
-    <h2 class="chart-title">Pig — Normal vs. Cloned Identification</h2>
+  <div class="chart-block">
+    <h2 class="chart-title">Sheep — Normal vs Cloned</h2>
     <div class="flex-row">
-        <img src="pig.jpg" alt="Pig">
-        <canvas id="pigChart" width="350" height="350"></canvas>
+      <img src="sheep.jpg" alt="Sheep">
+      <canvas id="sheepChart"></canvas>
     </div>
     <div class="analysis-box">
-        <h3>Analysis</h3>
-        <p>
-            Most participants believed the pig was normal, indicating the cloned pig’s appearance
-            was not noticeably unusual.
-        </p>
+      <h3>Analysis</h3>
+      <div id="analysis_sheep" class="editable-area" contenteditable="true">
+        The sheep was cloned, but many participants guessed “normal” — revealing a gap in
+        visual detection. This may suggest cloned sheep look very similar to non-cloned ones
+        in the image shown, or that people generally assume “sheep = normal.”  
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="chart-block">
-    <h2 class="chart-title">Sheep — Normal vs. Cloned Identification</h2>
+  <div class="chart-block">
+    <h2 class="chart-title">Naur — Normal vs Cloned</h2>
     <div class="flex-row">
-        <img src="sheep.jpg" alt="Sheep">
-        <canvas id="sheepChart" width="350" height="350"></canvas>
+      <img src="naur.jpg" alt="Naur">
+      <canvas id="naurChart"></canvas>
     </div>
     <div class="analysis-box">
-        <h3>Analysis</h3>
-        <p>
-            Responses suggest cloned sheep are also visually indistinguishable from normal ones,
-            aligning with previous cloning research involving sheep.
-        </p>
+      <h3>Analysis</h3>
+      <div id="analysis_naur" class="editable-area" contenteditable="true">
+        For the naur, there was a more balanced split between “normal” and “cloned.” This may
+        imply that the image was ambiguous to participants or had features that made some
+        suspect cloning. It’s a useful insight into how recognizable (or not) clones can be.
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="chart-block">
-    <h2 class="chart-title">Naur — Normal vs. Cloned Identification</h2>
+  <div class="chart-block">
+    <h2 class="chart-title">Dog — Normal vs Cloned</h2>
     <div class="flex-row">
-        <img src="naur.jpg" alt="Naur">
-        <canvas id="naurChart" width="350" height="350"></canvas>
+      <img src="dog.jpg" alt="Dog">
+      <canvas id="dogChart"></canvas>
     </div>
     <div class="analysis-box">
-        <h3>Analysis</h3>
-        <p>
-            The naur had a more even split, suggesting subtle image elements made participants 
-            suspicious it might be cloned.
-        </p>
+      <h3>Analysis</h3>
+      <div id="analysis_dog" class="editable-area" contenteditable="true">
+        Because the dog was normal, the fact that most identified it correctly supports that
+        cloning was not visibly obvious in this case. It indicates participants could trust
+        their judgment more for this animal.
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="chart-block">
-    <h2 class="chart-title">Dog — Normal vs. Cloned Identification</h2>
+  <!-- New Question: Should we clone humans? -->
+  <div class="chart-block">
+    <h2 class="chart-title">Should We Expand Cloning Research to Humans?</h2>
     <div class="flex-row">
-        <img src="dog.jpg" alt="Dog">
-        <canvas id="dogChart" width="350" height="350"></canvas>
+      <canvas id="humanChart"></canvas>
     </div>
     <div class="analysis-box">
-        <h3>Analysis</h3>
-        <p>
-            Nearly all participants labeled the dog as normal, suggesting cloning did not alter
-            recognizable traits in this case.
-        </p>
+      <h3>Analysis</h3>
+      <div id="analysis_human" class="editable-area" contenteditable="true">
+        Based on the responses (Yes: 6, No: 12), there is considerably more opposition to
+        human cloning than for animals. This suggests people are more cautious about extending
+        cloning technology to humans — likely due to stronger ethical, social, and biological
+        risks.
+      </div>
     </div>
-</div>
+  </div>
 
-<footer>
+  <!-- Rotating Quotes -->
+  <div class="quotes-section">
+    <div class="quote active" id="quote1">“Placeholder quote 1 from a participant.”</div>
+    <div class="quote" id="quote2">“Placeholder quote 2 from a participant.”</div>
+    <div class="quote" id="quote3">“Placeholder quote 3 from a participant.”</div>
+  </div>
+
+  <footer>
     Cloning Survey Research Project™ — Website created by <strong>Arya Ravikumar</strong>
-</footer>
+  </footer>
 
-<script>
-// Data
-const cloneCounts = { Yes: 7, No: 1, Maybe: 7, Unopposed: 2 };
-const humaneCounts = { Yes: 11, No: 6 };
-const normalClonedCounts = { Normal: 38, Cloned: 30 };
-const animalCounts = {
-    pig: { Normal: 14, Cloned: 4 },
-    sheep: { Normal: 15, Cloned: 3 },
-    naur: { Normal: 12, Cloned: 6 },
-    dog: { Normal: 17, Cloned: 1 }
-};
+  <script>
+    // ----- Chart data -----
+    const cloneCounts = { Yes: 7, No: 1, Maybe: 7, Unopposed: 2 };
+    const humaneCounts = { Yes: 11, No: 6 };
+    const normalClonedCounts = { Normal: 38, Cloned: 30 };
+    const humanCounts = { Yes: 6, No: 12 };
+    const animalCounts = {
+      pig: { Normal: 14, Cloned: 4 },
+      sheep: { Normal: 15, Cloned: 3 },
+      naur: { Normal: 12, Cloned: 6 },
+      dog: { Normal: 17, Cloned: 1 }
+    };
 
-// Convert counts → percentages
-function toPercent(counts) {
-    const total = Object.values(counts).reduce((a,b)=>a+b,0);
-    return Object.fromEntries(
-        Object.entries(counts).map(([k,v]) => [k, ((v / total) * 100).toFixed(1)])
-    );
-}
+    function toPct(obj) {
+      const total = Object.values(obj).reduce((a, b) => a + b, 0);
+      return Object.fromEntries(
+        Object.entries(obj).map(([k, v]) => [k, ((v/total)*100).toFixed(1)])
+      );
+    }
 
-// Chart generator
-function makeChart(id, type, obj) {
-    new Chart(document.getElementById(id), {
-        type,
+    function makeChart(id, dataObj) {
+      const pct = toPct(dataObj);
+      new Chart(document.getElementById(id), {
+        type: 'pie',
         data: {
-            labels: Object.keys(obj),
-            datasets: [{
-                data: Object.values(obj),
-                borderWidth: 2
-            }]
+          labels: Object.keys(pct),
+          datasets: [{ data: Object.values(pct) }]
         },
         options: { responsive: true }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      makeChart('cloneChart', cloneCounts);
+      makeChart('humaneChart', humaneCounts);
+      makeChart('normalClonedChart', normalClonedCounts);
+      makeChart('humanChart', humanCounts);
+      makeChart('pigChart', animalCounts.pig);
+      makeChart('sheepChart', animalCounts.sheep);
+      makeChart('naurChart', animalCounts.naur);
+      makeChart('dogChart', animalCounts.dog);
+
+      // ----- Carousel functionality -----
+      const track = document.querySelector('.carousel-track');
+      const slides = Array.from(track.children);
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      let currentIndex = 0;
+
+      function updateCarousel() {
+        const slideWidth = slides[0].getBoundingClientRect().width;
+        track.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+      }
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateCarousel();
+      });
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+      });
+
+      // Auto-play carousel every 4 seconds
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+      }, 4000);
+
+      // ----- Rotating Quotes -----
+      const quotes = document.querySelectorAll('.quote');
+      let quoteIndex = 0;
+      setInterval(() => {
+        quotes[quoteIndex].classList.remove('active');
+        quoteIndex = (quoteIndex + 1) % quotes.length;
+        quotes[quoteIndex].classList.add('active');
+      }, 5000);
     });
-}
-
-// Render charts
-makeChart("cloneChart", "bar", toPercent(cloneCounts));
-makeChart("humaneChart", "pie", toPercent(humaneCounts));
-makeChart("normalClonedChart", "pie", toPercent(normalClonedCounts));
-
-makeChart("pigChart", "pie", toPercent(animalCounts.pig));
-makeChart("sheepChart", "pie", toPercent(animalCounts.sheep));
-makeChart("naurChart", "pie", toPercent(animalCounts.naur));
-makeChart("dogChart", "pie", toPercent(animalCounts.dog));
-</script>
+  </script>
 
 </body>
 </html>

@@ -4,109 +4,153 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Survey Results</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 body {
-font-family: Arial, sans-serif;
-background: #f7f7f7;
-padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  padding: 40px 20px;
 }
 h1 {
-text-align: center;
-margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 .chart-container {
-width: 90%;
-max-width: 650px;
-background: white;
-padding: 20px;
-border-radius: 16px;
-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-margin: 30px auto;
+  width: 90%;
+  max-width: 650px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
 }
 .image-row {
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
-gap: 15px;
-margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
 }
 .image-row img {
-width: 200px;
-border-radius: 12px;
-box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.analysis-box {
+  width: 90%;
+  max-width: 750px;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin: 50px auto;
+}
+.analysis-box h2 {
+  margin-top: 0;
 }
 </style>
 </head>
 <body>
 
-
 <h1>Survey Results</h1>
 
-
 <div class="image-row">
-<img src="pig.jpg" alt="Pig" />
-<img src="sheep.jpg" alt="Sheep" />
-<img src="naur.jpg" alt="Naur" />
-<img src="dog.jpg" alt="Dog" />
+  <img src="pig.jpg" alt="Pig" />
+  <img src="sheep.jpg" alt="Sheep" />
+  <img src="naur.jpg" alt="Naur" />
+  <img src="dog.jpg" alt="Dog" />
 </div>
-
 
 <div class="chart-container">
-<h2>Should Animals Be Cloned?</h2>
-<canvas id="cloneChart"></canvas>
+  <h2>Should Animals Be Cloned?</h2>
+  <canvas id="cloneChart"></canvas>
 </div>
-
 
 <div class="chart-container">
-<h2>Is Cloning Humane?</h2>
-<canvas id="humaneChart"></canvas>
+  <h2>Is Cloning Humane?</h2>
+  <canvas id="humaneChart"></canvas>
 </div>
-
 
 <div class="chart-container">
-<h2>Normal vs Cloned (All Animals Combined)</h2>
-<canvas id="normalClonedChart"></canvas>
+  <h2>Normal vs Cloned (All Animals Combined)</h2>
+  <canvas id="normalClonedChart"></canvas>
 </div>
 
+<div class="chart-container">
+  <h2>Pig: Normal vs Cloned</h2>
+  <canvas id="pigChart"></canvas>
+</div>
 
-<script src="chart.js"></script>
+<div class="chart-container">
+  <h2>Sheep: Normal vs Cloned</h2>
+  <canvas id="sheepChart"></canvas>
+</div>
+
+<div class="chart-container">
+  <h2>Naur: Normal vs Cloned</h2>
+  <canvas id="naurChart"></canvas>
+</div>
+
+<div class="chart-container">
+  <h2>Dog: Normal vs Cloned</h2>
+  <canvas id="dogChart"></canvas>
+</div>
+
+<div class="analysis-box">
+  <h2>Data Analysis & Interpretation</h2>
+  <p><!-- WRITE YOUR ANALYSIS HERE -->
+  </p>
+</div>
+
 <script>
-// Data YOU provided
+// MAIN SURVEY DATA
 const cloneCounts = { Yes: 7, No: 1, Maybe: 7, Unopposed: 2 };
 const humaneCounts = { Yes: 11, No: 6 };
 const normalClonedCounts = { Normal: 38, Cloned: 30 };
 
+// INDIVIDUAL ANIMAL DATA
+const animalCounts = {
+  pig: { Normal: 14, Cloned: 4 },
+  sheep: { Normal: 15, Cloned: 3 },
+  naur: { Normal: 12, Cloned: 6 },
+  dog: { Normal: 17, Cloned: 1 }
+};
 
 function toPercent(counts) {
-const total = Object.values(counts).reduce((a,b)=>a+b,0);
-return Object.fromEntries(
-Object.entries(counts).map(([k,v]) => [k, ((v/total)*100).toFixed(1)])
-);
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  return Object.fromEntries(
+    Object.entries(counts).map(([k,v]) => [k, ((v/total)*100).toFixed(1)])
+  );
 }
 
+function makeChart(id, type, labels, data) {
+  new Chart(document.getElementById(id), {
+    type: type,
+    data: {
+      labels: labels,
+      datasets: [{ data: data, borderWidth: 2 }]
+    },
+    options: { responsive: true }
+  });
+}
 
+// Convert to percentages
 const clonePct = toPercent(cloneCounts);
 const humanePct = toPercent(humaneCounts);
 const normalClonedPct = toPercent(normalClonedCounts);
 
-
-function makeChart(id, type, labels, data) {
-new Chart(document.getElementById(id), {
-type: type,
-data: {
-labels: labels,
-datasets: [{ data: data, borderWidth: 2 }]
-},
-options: { responsive: true }
-});
-}
-
-
+// Render main charts
 makeChart('cloneChart', 'bar', Object.keys(clonePct), Object.values(clonePct));
 makeChart('humaneChart', 'pie', Object.keys(humanePct), Object.values(humanePct));
 makeChart('normalClonedChart', 'pie', Object.keys(normalClonedPct), Object.values(normalClonedPct));
-</script>
 
+// Render individual animal charts
+for (const [animal, counts] of Object.entries(animalCounts)) {
+  const pct = toPercent(counts);
+  makeChart(`${animal}Chart`, 'pie', Object.keys(pct), Object.values(pct));
+}
+
+</script>
 
 </body>
 </html>

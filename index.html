@@ -15,38 +15,42 @@ h1 {
   text-align: center;
   margin-bottom: 30px;
 }
-.chart-container {
-  width: 90%;
-  max-width: 650px;
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin: 30px auto;
-}
-.image-row {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 40px;
-}
-.image-row img {
-  width: 200px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.analysis-box {
-  width: 90%;
-  max-width: 750px;
+.chart-section {
+  width: 95%;
+  max-width: 900px;
   background: white;
   padding: 25px;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  margin: 50px auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
 }
-.analysis-box h2 {
-  margin-top: 0;
+.section-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.section-row img {
+  width: 250px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+canvas {
+  max-width: 500px;
+}
+.data-box {
+  background: #fafafa;
+  padding: 15px;
+  border-left: 4px solid #0077cc;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+.footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 14px;
+  opacity: 0.8;
 }
 </style>
 </head>
@@ -54,52 +58,80 @@ h1 {
 
 <h1>Survey Results</h1>
 
-<div class="image-row">
-  <img src="pig.jpg" alt="Pig" />
-  <img src="sheep.jpg" alt="Sheep" />
-  <img src="naur.jpg" alt="Naur" />
-  <img src="dog.jpg" alt="Dog" />
-</div>
-
-<div class="chart-container">
+<!-- CLONING QUESTION -->
+<div class="chart-section">
   <h2>Should Animals Be Cloned?</h2>
-  <canvas id="cloneChart"></canvas>
+  <div class="section-row">
+    <canvas id="cloneChart"></canvas>
+  </div>
+  <div class="data-box">
+    <!-- ANALYSIS FOR THIS SECTION -->
+  </div>
 </div>
 
-<div class="chart-container">
+<!-- HUMANE QUESTION -->
+<div class="chart-section">
   <h2>Is Cloning Humane?</h2>
-  <canvas id="humaneChart"></canvas>
+  <div class="section-row">
+    <canvas id="humaneChart"></canvas>
+  </div>
+  <div class="data-box">
+  </div>
 </div>
 
-<div class="chart-container">
+<!-- ALL ANIMALS COMBINED -->
+<div class="chart-section">
   <h2>Normal vs Cloned (All Animals Combined)</h2>
-  <canvas id="normalClonedChart"></canvas>
+  <div class="section-row">
+    <canvas id="normalClonedChart"></canvas>
+  </div>
+  <div class="data-box">
+  </div>
 </div>
 
-<div class="chart-container">
+<!-- PIG SECTION -->
+<div class="chart-section">
   <h2>Pig: Normal vs Cloned</h2>
-  <canvas id="pigChart"></canvas>
+  <div class="section-row">
+    <img src="pig.jpg" alt="Pig" />
+    <canvas id="pigChart"></canvas>
+  </div>
+  <div class="data-box"></div>
 </div>
 
-<div class="chart-container">
+<!-- SHEEP SECTION -->
+<div class="chart-section">
   <h2>Sheep: Normal vs Cloned</h2>
-  <canvas id="sheepChart"></canvas>
+  <div class="section-row">
+    <img src="sheep.jpg" alt="Sheep" />
+    <canvas id="sheepChart"></canvas>
+  </div>
+  <div class="data-box"></div>
 </div>
 
-<div class="chart-container">
+<!-- NAUR SECTION -->
+<div class="chart-section">
   <h2>Naur: Normal vs Cloned</h2>
-  <canvas id="naurChart"></canvas>
+  <div class="section-row">
+    <img src="naur.jpg" alt="Naur" />
+    <canvas id="naurChart"></canvas>
+  </div>
+  <div class="data-box"></div>
 </div>
 
-<div class="chart-container">
+<!-- DOG SECTION -->
+<div class="chart-section">
   <h2>Dog: Normal vs Cloned</h2>
-  <canvas id="dogChart"></canvas>
+  <div class="section-row">
+    <img src="dog.jpg" alt="Dog" />
+    <canvas id="dogChart"></canvas>
+  </div>
+  <div class="data-box"></div>
 </div>
 
-<div class="analysis-box">
-  <h2>Data Analysis & Interpretation</h2>
-  <p><!-- WRITE YOUR ANALYSIS HERE -->
-  </p>
+<div class="footer">
+  This website was created by <b>Arya Ravikumar</b><br>
+  Under the <b>Cloning Survey Research Project™</b>
 </div>
 
 <script>
@@ -134,7 +166,7 @@ function makeChart(id, type, labels, data) {
   });
 }
 
-// Convert to percentages
+// Main percentages
 const clonePct = toPercent(cloneCounts);
 const humanePct = toPercent(humaneCounts);
 const normalClonedPct = toPercent(normalClonedCounts);
@@ -149,7 +181,6 @@ for (const [animal, counts] of Object.entries(animalCounts)) {
   const pct = toPercent(counts);
   makeChart(`${animal}Chart`, 'pie', Object.keys(pct), Object.values(pct));
 }
-
 </script>
 
 </body>

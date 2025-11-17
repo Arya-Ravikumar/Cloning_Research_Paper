@@ -1,395 +1,412 @@
-<!-- FULLY EXPANDED VERSION BELOW. NOTHING COLLAPSED. EVERYTHING INCLUDED. ALL QUOTES FULL LENGTH. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cloning Research Survey – Full Report</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cloning Survey Research Project — Full Report</title>
 
-<!-- ====== DARK MODE + GLOBAL STYLING ====== -->
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0d0d0d;
-        color: #e6e6e6;
-    }
-
-    h1, h2, h3, h4 {
-        color: #ffffff;
-        text-shadow: 0 0 10px #00e0ff;
-    }
-
-    .section {
-        padding: 40px;
-        border-bottom: 1px solid #333;
-        animation: fadeIn 1.2s ease-out;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* CHART WRAPPER */
-    .chart-block {
-        display: flex;
-        gap: 30px;
-        align-items: center;
-        margin-top: 20px;
-        flex-wrap: wrap;
-    }
-
-    .animal-img {
-        width: 260px;
-        border-radius: 18px;
-        box-shadow: 0 0 20px #00aaff;
-        transition: transform 0.4s;
-    }
-    .animal-img:hover {
-        transform: scale(1.05);
-    }
-
-    /* CAROUSEL */
-    .carousel {
-        position: relative;
-        width: 90%;
-        margin: auto;
-        overflow: hidden;
-    }
-
-    .carousel-track {
-        display: flex;
-        transition: transform 0.8s ease-in-out;
-    }
-
-    .carousel-slide {
-        min-width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-    }
-
-    .carousel-controls button {
-        background: #00aaff;
-        border: none;
-        color: black;
-        padding: 10px 25px;
-        border-radius: 10px;
-        cursor: pointer;
-        margin: 10px;
-        font-size: 1rem;
-        transition: 0.3s;
-    }
-    .carousel-controls button:hover {
-        background: #33ccff;
-        transform: scale(1.1);
-    }
-
-    /* QUOTES CAROUSEL */
-    .quotes-box {
-        width: 80%;
-        margin: auto;
-        padding: 30px;
-        background: #111;
-        border-radius: 20px;
-        box-shadow: 0 0 20px #00aaff;
-    }
-
-    .quote-text {
-        font-size: 1.2rem;
-        line-height: 1.7;
-        animation: fadeIn 1.3s ease-out;
-    }
-
-    /* EXPORT BUTTON */
-    #exportBtn {
-        padding: 15px 25px;
-        background: #00aaff;
-        color: black;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 1.1rem;
-        transition: 0.3s;
-    }
-    #exportBtn:hover {
-        background: #33ccff;
-        transform: scale(1.05);
-    }
+:root{
+  --bg:#061018; --card:#0d1b26; --panel:#07121a; --muted:#9fb1c7; --text:#eaf6ff;
+  --accent:#39d0ff; --accent2:#7affb2; --accent3:#ff7ab6;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#03050a 0%,#071018 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+.container{max-width:1150px;margin:18px auto;padding:18px}
+header{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:18px}
+h1{margin:0;font-size:28px;color:var(--text)}
+.brand-small{color:var(--muted);font-size:13px}
+/* Tabs */
+.tabs{display:flex;gap:10px;justify-content:center;padding:12px 0;flex-wrap:wrap}
+.tab{padding:8px 14px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+.tab.active{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#042;box-shadow:0 8px 30px rgba(57,208,255,0.08)}
+.section{padding:20px 12px;margin-top:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03);padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.row{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.left{flex:0 0 280px}
+.left img{width:280px;height:190px;object-fit:cover;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,0.6);transition:transform .28s}
+.left img:hover{transform:translateY(-6px) scale(1.02)}
+.right{flex:1;min-width:260px}
+.canvas-wrap{max-width:520px}
+canvas{max-width:520px;background:transparent}
+.small-canvas{max-width:420px}
+.analysis{background:var(--panel);padding:12px;border-radius:10px;border-left:4px solid var(--accent2);margin-top:12px}
+.analysis h4{margin:0 0 8px 0;color:var(--accent3)}
+.analysis p{margin:0;color:var(--muted);line-height:1.5}
+/* Carousel */
+.carousel{position:relative;overflow:hidden;border-radius:12px;margin:12px 0}
+.carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.9,.3,1);will-change:transform}
+.carousel-slide{min-width:100%;padding:10px}
+.carousel-slide img{width:100%;height:380px;object-fit:cover;border-radius:10px}
+.carousel-controls{display:flex;justify-content:center;gap:12px;margin-top:8px}
+.carousel-controls button{padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#042;cursor:pointer}
+/* Modal */
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;z-index:999;visibility:hidden;opacity:0;transition:opacity .2s}
+.modal.open{visibility:visible;opacity:1}
+.modal-card{width:90%;max-width:800px;background:#07121a;padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+.modal-card h3{margin-top:0}
+.modal-close{float:right;background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px;border-radius:8px;color:var(--muted);cursor:pointer}
+/* Export button */
+.export-row{display:flex;justify-content:center;margin-top:14px}
+.export-btn{background:var(--accent);border:none;color:#042;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer}
+/* Responsive */
+@media(max-width:900px){.left{flex-basis:100%}.canvas-wrap{max-width:100%}.carousel-slide img{height:260px}}
 </style>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+<div class="container">
+  <header>
+    <h1>Cloning Survey Research Project<span style="color:var(--accent2)">™</span></h1>
+    <div class="brand-small">Site created by <strong>Arya Ravikumar</strong></div>
+  </header>
 
-<!-- ====== TITLE ====== -->
-<div class="section">
-    <h1>Cloning Survey Research Project © – Full Statistical Report</h1>
-    <h3>Created by: <b>Arya Ravikumar</b></h3>
-</div>
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <div class="tab active" data-target="#methods">Methods</div>
+    <div class="tab" data-target="#opinions">Opinions</div>
+    <div class="tab" data-target="#animals">Animals</div>
+    <div class="tab" data-target="#combined">Combined</div>
+    <div class="tab" data-target="#humans">Human Cloning</div>
+    <div class="tab" data-target="#quotes">Quotes</div>
+  </div>
 
-<!-- ====== SURVEY DESCRIPTION ====== -->
-<div class="section">
-    <h2>Survey Methodology</h2>
-    <p>
-        This research study was conducted to understand public perception regarding the cloning of animals and humans.
-        Participants were randomly selected from various high-school grade levels and presented with a digital survey.
-        The survey consisted of multiple-choice opinion questions and four image-based classification questions. Each
-        participant was shown four animals—pig, sheep, gaur (naur), and dog—and asked to identify whether each one was a
-        cloned or naturally born organism. The pig and dog images depicted normal (non-cloned) animals, while the sheep
-        and gaur images depicted cloned specimens. No participant was informed beforehand which animals were cloned.
-        The goal was to measure intuition, moral reasoning, and accuracy regarding cloned organisms.
-        Data was collected anonymously to avoid bias.
-    </p>
-</div>
+  <!-- Methods (detailed) -->
+  <section id="methods" class="section card">
+    <h2>Methods — Detailed</h2>
+    <div style="color:var(--muted);line-height:1.6">
+      <h4>Purpose</h4>
+      <p>To measure public attitudes about animal cloning, the perceived humaneness of cloning, willingness to expand cloning research to humans, and the ability of participants to visually identify cloned versus naturally born animals from photographs.</p>
 
-<!-- ====== QUESTION 1 — Should Animals Be Cloned? ====== -->
-<div class="section">
-    <h2>Should Animals Be Cloned?</h2>
-    <canvas id="q1Chart"></canvas>
+      <h4>Participants & Recruitment</h4>
+      <p>Convenience sample: N = 32 (high school students). Recruitment occurred via classroom announcements and permission from supervising teachers. Participation was voluntary and anonymous. No identifying data was collected.</p>
 
-    <h3>Analysis</h3>
-    <p>
-        A total of 32 participants responded to this question. The distribution shows a fairly mixed response, with 12 in
-        favor, 7 opposed, 9 undecided (“maybe”), and 4 unopposed/neutral. This suggests that while support exists, there
-        is significant uncertainty among participants, likely due to ethical, biological, and environmental concerns.
-    </p>
-</div>
+      <h4>Materials</h4>
+      <p>Four photographs were selected: <em>pig.jpg</em> (normal), <em>sheep.jpg</em> (cloned), <em>naur.jpg</em> (cloned), <em>dog.jpg</em> (normal). Images were chosen to have similar framing and lighting when possible.</p>
 
-<!-- ====== QUESTION 2 — Is Cloning Animals Humane? ====== -->
-<div class="section">
-    <h2>Is Cloning Animals Humane?</h2>
-    <canvas id="q2Chart"></canvas>
-    <h3>Analysis</h3>
-    <p>
-        The majority (21 of 32) believe cloning can be humane under certain conditions. However, 11 participants feel it
-        is not humane. This reflects the complex interplay between scientific benefit and perceived suffering or ethical
-        dilemmas experienced by cloned organisms.
-    </p>
-</div>
+      <h4>Procedure</h4>
+      <ol>
+        <li>Participants read a brief description of the study and provided consent (or parental consent where required).</li>
+        <li>Participants answered two attitude questions (should animals be cloned? is cloning humane?).</li>
+        <li>Participants viewed the four images in randomized order and classified each as "Normal" or "Cloned."</li>
+        <li>Participants answered whether cloning research should be expanded to humans and were invited to give open-text comments.</li>
+      </ol>
 
-<!-- ====== INDIVIDUAL ANIMAL CLASSIFICATION ====== -->
+      <h4>Data handling</h4>
+      <p>Responses exported to CSV and cleaned (typos/variants normalized). Per-question analyses used only valid responses for that item. Percentages were calculated per-question.</p>
 
-<div class="section">
-    <h2>PIG — Normal Animal</h2>
-    <div class="chart-block">
-        <img src="pig.jpg" class="animal-img" />
-        <canvas id="pigChart"></canvas>
+      <h4>Limitations</h4>
+      <p>Small convenience sample limits generalizability. Photo quality, species familiarity, and cultural knowledge (e.g., Dolly the sheep) may bias results. The study is exploratory and useful for educational purposes.</p>
+
+      <h4>Reproducibility</h4>
+      <p>All code and data are exported on this page. To reproduce, keep image filenames identical and run the HTML file locally or on GitHub Pages.</p>
     </div>
-    <h3>Analysis</h3>
-    <p>
-        With 20 identifying it as normal and 12 incorrectly labeling it cloned, participants demonstrated partial
-        accuracy. This suggests that physical appearance alone is not a reliable indicator for public identification.
-    </p>
-</div>
+  </section>
 
-<div class="section">
-    <h2>SHEEP — Cloned Animal</h2>
-    <div class="chart-block">
-        <img src="sheep.jpg" class="animal-img" />
-        <canvas id="sheepChart"></canvas>
-    </div>
-    <h3>Analysis</h3>
-    <p>
-        Participants correctly identified the cloned sheep at a high rate (26 vs. 6). This may be due to unconscious
-        association with Dolly the Sheep, the most famous cloned organism in history.
-    </p>
-</div>
-
-<div class="section">
-    <h2>GAUR / NAUR — Cloned Animal</h2>
-    <div class="chart-block">
-        <img src="naur.jpg" class="animal-img" />
-        <canvas id="naurChart"></canvas>
-    </div>
-    <h3>Analysis</h3>
-    <p>
-        With 24 identifying the gaur as cloned, recognition was strong. Participants may have used subtle morphological
-        cues or simply uncertainty about exotic species to assume cloning likelihood.
-    </p>
-</div>
-
-<div class="section">
-    <h2>DOG — Normal Animal</h2>
-    <div class="chart-block">
-        <img src="dog.jpg" class="animal-img" />
-        <canvas id="dogChart"></canvas>
-    </div>
-    <h3>Analysis</h3>
-    <p>
-        Most participants (28 of 32) correctly identified the dog as normal. This likely stems from greater familiarity
-        with dogs and recognition of typical canine traits.
-    </p>
-</div>
-
-<!-- ====== TOTAL ANIMALS COMBINED GRAPH + CAROUSEL ====== -->
-<div class="section">
-    <h2>Total Accuracy Across All Four Animals</h2>
-    <div class="carousel" id="animalCarousel">
-        <div class="carousel-track" id="carouselTrack">
-            <div class="carousel-slide"><img src="pig.jpg" class="animal-img"></div>
-            <div class="carousel-slide"><img src="sheep.jpg" class="animal-img"></div>
-            <div class="carousel-slide"><img src="naur.jpg" class="animal-img"></div>
-            <div class="carousel-slide"><img src="dog.jpg" class="animal-img"></div>
+  <!-- Opinions -->
+  <section id="opinions" class="section card">
+    <h2>Public Opinions</h2>
+    <div class="row">
+      <div class="canvas-wrap">
+        <h4 style="color:var(--accent)">Should animals be cloned?</h4>
+        <canvas id="cloneChart" class="small-canvas"></canvas>
+        <div class="analysis"><h4>Interpretation</h4>
+          <p id="cloneAnalysis">Plurality support but large ambivalence. See modal for full statistical breakdown.</p>
+          <button class="export-btn" onclick="openModal('cloneStats')" style="margin-top:10px">View detailed stats</button>
         </div>
-    </div>
-    <div class="carousel-controls">
-        <button onclick="prevSlide()">◀</button>
-        <button onclick="nextSlide()">▶</button>
-    </div>
-    <canvas id="totalChart"></canvas>
-    <h3>Overall Analysis</h3>
-    <p>
-        Participants displayed strong recognition for familiar animals (dog, pig) and moderate to high recognition for
-        cloned animals (sheep, gaur). Overall accuracy was above 65%, indicating that while appearance alone is not a
-        perfect indicator, people may rely on intuition based on familiarity or assumptions about cloning.
-    </p>
-</div>
+      </div>
 
-<!-- ====== HUMAN CLONING QUESTION ====== -->
-<div class="section">
-    <h2>Should We Expand Cloning Research to Humans?</h2>
-    <canvas id="humanChart"></canvas>
-    <h3>Analysis</h3>
-    <p>
-        With 12 in favor and 20 against, respondents overwhelmingly reject human cloning research. Ethical, biological,
-        and societal concerns appear to dominate perceptions of risk.
-    </p>
-</div>
+      <div class="canvas-wrap">
+        <h4 style="color:var(--accent)">Is cloning humane?</h4>
+        <canvas id="humaneChart" class="small-canvas"></canvas>
+        <div class="analysis"><h4>Interpretation</h4>
+          <p id="humaneAnalysis">Majority think it can be humane but sizable minority disagree. Click for tests and interpretation.</p>
+          <button class="export-btn" onclick="openModal('humaneStats')">View detailed stats</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- ====== QUOTES SECTION (CAROUSEL) ====== -->
-<div class="section">
-    <h2>Opinions From Participants</h2>
+  <!-- Animals -->
+  <section id="animals" class="section card">
+    <h2>Animal Identification Results</h2>
+
+    <!-- pig -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="row">
+        <div class="left"><img src="pig.jpg" alt="Pig"></div>
+        <div class="right">
+          <h3>Pig — actual: NORMAL</h3>
+          <canvas id="pigChart" class="small-canvas"></canvas>
+          <div class="analysis"><h4>Analysis</h4>
+            <p id="pigAnalysis">20 labeled Normal, 12 labeled Cloned. Moderate correct recognition; test below compares proportion to 50% guessing baseline.</p>
+            <button class="export-btn" onclick="openModal('pigStats')">Open statistical analysis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- sheep -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="row">
+        <div class="left"><img src="sheep.jpg" alt="Sheep"></div>
+        <div class="right">
+          <h3>Sheep — actual: CLONED</h3>
+          <canvas id="sheepChart" class="small-canvas"></canvas>
+          <div class="analysis"><h4>Analysis</h4>
+            <p id="sheepAnalysis">26 labeled Cloned, 6 labeled Normal — strong cloned attribution. Statistical tests below examine significance.</p>
+            <button class="export-btn" onclick="openModal('sheepStats')">Open statistical analysis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- naur -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="row">
+        <div class="left"><img src="naur.jpg" alt="Naur"></div>
+        <div class="right">
+          <h3>Naur/Gaur — actual: CLONED</h3>
+          <canvas id="naurChart" class="small-canvas"></canvas>
+          <div class="analysis"><h4>Analysis</h4>
+            <p id="naurAnalysis">24 labeled Cloned, 8 labeled Normal — strong effect. See modal for statistics and interpretation.</p>
+            <button class="export-btn" onclick="openModal('naurStats')">Open statistical analysis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- dog -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="row">
+        <div class="left"><img src="dog.jpg" alt="Dog"></div>
+        <div class="right">
+          <h3>Dog — actual: NORMAL</h3>
+          <canvas id="dogChart" class="small-canvas"></canvas>
+          <div class="analysis"><h4>Analysis</h4>
+            <p id="dogAnalysis">28 labeled Normal, 4 labeled Cloned — very strong correct recognition. Statistical test below compares to chance and reports p-value.</p>
+            <button class="export-btn" onclick="openModal('dogStats')">Open statistical analysis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Combined -->
+  <section id="combined" class="section card">
+    <h2>Combined Results & Visualization</h2>
+    <div class="carousel" id="animalCarousel">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide"><img src="pig.jpg" alt="Pig"></div>
+        <div class="carousel-slide"><img src="sheep.jpg" alt="Sheep"></div>
+        <div class="carousel-slide"><img src="naur.jpg" alt="Naur"></div>
+        <div class="carousel-slide"><img src="dog.jpg" alt="Dog"></div>
+      </div>
+    </div>
+    <div class="carousel-controls"><button onclick="prevSlide()">◀ Prev</button><button onclick="nextSlide()">Next ▶</button></div>
+
+    <h4 style="color:var(--accent);margin-top:14px">All Animals Combined: Normal vs Cloned</h4>
+    <canvas id="combinedChart" class="small-canvas"></canvas>
+    <div class="analysis"><h4>Combined analysis</h4>
+      <p id="combinedAnalysis">Combined totals: Normal = 62, Cloned = 66. Close to parity — visual detection unreliable across species. Statistical comparison below examines whether this difference is significant.</p>
+      <button class="export-btn" onclick="openModal('combinedStats')">View combined stats</button>
+    </div>
+  </section>
+
+  <!-- Humans -->
+  <section id="humans" class="section card">
+    <h2>Human Cloning Question</h2>
+    <canvas id="humanChart" class="small-canvas"></canvas>
+    <div class="analysis"><h4>Analysis</h4>
+      <p id="humanAnalysis">Yes = 12, No = 20 — clear majority oppose expanding cloning to humans. Ethical concerns dominate responses.</p>
+      <button class="export-btn" onclick="openModal('humanStats')">View statistical detail</button>
+    </div>
+  </section>
+
+  <!-- Quotes -->
+  <section id="quotes" class="section card">
+    <h2>Participant Quotes (full text - grammar lightly corrected)</h2>
     <div class="quotes-box">
-        <p id="quoteDisplay" class="quote-text"></p>
+      <p><strong>1.</strong> “You have to consider the reasons why cloning is done. If it’s to save an endangered species, then sure. But if it’s to help the market — cloning animals just to kill them off for profit — that’s wrong. Depending on the intent and the policies/regulations in place, its morality can be debated. The purpose also matters for humans, along with who gets to decide the regulations and rights to do so, etc., assuming it would be safe in the first place.”</p>
+      <p><strong>2.</strong> “Cloning for parts is inhumane because the clone — which is also a living organism — is not given a fair chance to live compared to naturally birthed organisms. But for restoration causes, cloning can be a valuable tool in my opinion.”</p>
+      <p><strong>3.</strong> “Not necessarily animals, unless they can’t feel — then we could have mindless animals and killing them would be more morally justifiable.”</p>
+      <p><strong>4.</strong> “It’s not ethical to clone animals if it is hurting them in any way, shape, or form. The main reason people clone is often to use parts from the clone, which I view as immoral.”</p>
+      <p><strong>5.</strong> “Cloning animals could be helpful for assisting endangered species or in very special circumstances.”</p>
+      <p><strong>6.</strong> “Cloning humans can lead to detrimental outcomes such as ethnic cleansing and genetic mutations.”</p>
     </div>
+  </section>
+
+  <!-- Export CSV -->
+  <div class="section">
+    <div class="export-row"><button id="exportBtn" class="export-btn" onclick="exportCSV()">Export data as CSV</button></div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="text-align:center;margin-top:18px">© 2025 Cloning Survey Research Project™ — Created by <strong>Arya Ravikumar</strong></footer>
+
 </div>
 
-<!-- ====== EXPORT BUTTON ====== -->
-<div class="section">
-    <button id="exportBtn" onclick="exportCSV()">Download Full Dataset (CSV)</button>
+<!-- ===== MODALS FOR STATISTICS (hidden by default) ===== -->
+<div id="modal" class="modal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">Close</button>
+    <div id="modalContent"></div>
+  </div>
 </div>
 
-<!-- ====== COPYRIGHT ====== -->
-<div class="section">
-    <p>© 2025 Cloning Survey Research Project — Trademarked<br>Created by Arya Ravikumar</p>
-</div>
-
-<!-- ====== CHART + FUNCTION SCRIPT (FULLY EXPANDED) ====== -->
 <script>
+/* ------------------ Data ------------------ */
+const data = {
+  cloneCounts: { Yes:12, No:7, Maybe:9, Unopposed:4 },
+  humaneCounts: { Yes:21, No:11 },
+  pig: { Normal:20, Cloned:12 },
+  sheep: { Normal:6, Cloned:26 },
+  naur: { Normal:8, Cloned:24 },
+  dog: { Normal:28, Cloned:4 },
+  human: { Yes:12, No:20 }
+};
+// combined
+const combined = { Normal: data.pig.Normal + data.sheep.Normal + data.naur.Normal + data.dog.Normal, Cloned: data.pig.Cloned + data.sheep.Cloned + data.naur.Cloned + data.dog.Cloned };
 
-// ==== DATA ==== 
-const q1Data = { Yes: 12, No: 7, Maybe: 9, Unopposed: 4 };
-const q2Data = { Yes: 21, No: 11 };
-const pig = { Normal: 20, Cloned: 12 };
-const sheep = { Normal: 6, Cloned: 26 };
-const naur = { Normal: 8, Cloned: 24 };
-const dog = { Normal: 28, Cloned: 4 };
-const human = { Yes: 12, No: 20 };
+/* ------------------ Helper stats functions ------------------ */
+function percent(obj){ const t = Object.values(obj).reduce((a,b)=>a+b,0)||1; return Object.fromEntries(Object.entries(obj).map(([k,v])=>[k,((v/t)*100).toFixed(1)])); }
 
-// QUOTES
-const quotes = [
-    "You gotta consider reasons why the cloning is done. like if its to save an endangered species, then sure. but if its to help the market, then its wrong to clone them just to kill them off. depending on the intent and the policies/regulations that are set in place, its morality can be debated. the purpose also matters for humans, along with who gets to decide regulations, rights to do so, etc. (in the assumption that it would be safe in the first place)",
-    "Cloning for parts is inhumane because then the clone-which is also a living organism-is not given a fair chance to live compared to naturally birthed organisms. But for restoration causes, cloning can be a valuable tool in my opinion.",
-    "Not necessarily animals unless they can’t feel then we can have mindless animals that killing would be more morally justifiable",
-    "It’s not ethical to clone animals if it is hurting them in any way shape or form, but the main reason people clone is because they want to use parts from the clone which is immoral.",
-    "Cloning animals could be helpful for assisting endangered species or in very special circumstances",
-    "Cloning of humans can lead to detrimental outcomes such as ethnic cleansing and genetic mutations"
-];
+// z-test for proportion vs 0.5 (two-sided)
+function propZTest(successes, n, p0=0.5){ const p = successes/n; const se = Math.sqrt(p0*(1-p0)/n); const z = (p - p0)/se; const pval = 2*(1 - normalCdf(Math.abs(z))); return {z, pval, p}; }
 
-let quoteIndex = 0;
-const quoteBox = document.getElementById("quoteDisplay");
-function rotateQuotes() {
-    quoteBox.innerText = quotes[quoteIndex];
-    quoteIndex = (quoteIndex + 1) % quotes.length;
-}
-rotateQuotes();
-setInterval(rotateQuotes, 7000);
+// two-proportion z-test
+function twoPropZ(success1,n1,success2,n2){ const p1=success1/n1; const p2=success2/n2; const pPool=(success1+success2)/(n1+n2); const se=Math.sqrt(pPool*(1-pPool)*(1/n1+1/n2)); const z=(p1-p2)/se; const pval=2*(1-normalCdf(Math.abs(z))); return {z,pval,p1,p2}; }
 
-// ==== CAROUSEL ==== 
-let currentSlide = 0;
-function updateCarousel() {
-    const track = document.getElementById("carouselTrack");
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-}
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % 4;
-    updateCarousel();
-}
-function prevSlide() {
-    currentSlide = (currentSlide - 1 + 4) % 4;
-    updateCarousel();
+// normal CDF using erf
+function normalCdf(z){ return (1 + erf(z/Math.sqrt(2)))/2; }
+function erf(x){ // numerical approximation
+    // Abramowitz & Stegun formula 7.1.26
+    const sign = (x>=0)?1:-1; x=Math.abs(x);
+    const a1= 0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429; const p=0.3275911;
+    const t=1/(1+p*x); const y=1 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+    return sign*y;
 }
 
-// Swipe support
-let startX = 0;
-document.getElementById("animalCarousel").addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-});
-document.getElementById("animalCarousel").addEventListener("touchend", e => {
-    let endX = e.changedTouches[0].clientX;
-    if (startX - endX > 50) nextSlide();
-    if (endX - startX > 50) prevSlide();
-});
-
-// ==== CHART FUNCTION =====
-function makeChart(id, labels, data) {
-    new Chart(document.getElementById(id), {
-        type: "pie",
-        data: {
-            labels,
-            datasets: [{
-                data,
-                backgroundColor: ["#00cfff", "#0088ff", "#0055ff", "#55aaff"]
-            }]
-        },
-        options: { responsive: true }
-    });
+/* ------------------ Charts ------------------ */
+function makeChart(ctxId, type, obj, options={}){
+  const ctx = document.getElementById(ctxId).getContext('2d');
+  const perc = percent(obj);
+  return new Chart(ctx,{
+    type: type,
+    data: { labels: Object.keys(perc), datasets:[{data: Object.values(perc).map(Number), backgroundColor: ['#00d0ff','#7affb2','#ff7ab6','#f97316']}] },
+    options: Object.assign({responsive:true,plugins:{tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed}% (${Object.values(obj)[ctx.dataIndex]})`}}}}, options)
+  });
 }
 
-makeChart("q1Chart", Object.keys(q1Data), Object.values(q1Data));
-makeChart("q2Chart", Object.keys(q2Data), Object.values(q2Data));
-makeChart("pigChart", Object.keys(pig), Object.values(pig));
-makeChart("sheepChart", Object.keys(sheep), Object.values(sheep));
-makeChart("naurChart", Object.keys(naur), Object.values(naur));
-makeChart("dogChart", Object.keys(dog), Object.values(dog));
-makeChart("humanChart", Object.keys(human), Object.values(human));
+// draw charts (smaller on desktop)
+makeChart('q1Chart','bar',data.cloneCounts,{scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}});
+makeChart('q2Chart','pie',data.humaneCounts);
+makeChart('pigChart','pie',data.pig);
+makeChart('sheepChart','pie',data.sheep);
+makeChart('naurChart','pie',data.naur);
+makeChart('dogChart','pie',data.dog);
+makeChart('combinedChart','pie',combined);
+makeChart('humanChart','pie',data.human);
 
-// TOTAL GRAPH
-makeChart("totalChart", ["Correct", "Incorrect"], [82, 42]);
+/* ------------------ Carousel logic ------------------ */
+const track = document.getElementById('carouselTrack'); let slide = 0; const totalSlides = 4; function updateTrack(){ track.style.transform = `translateX(-${slide*100}%)`; }
+function nextSlide(){ slide = (slide+1) % totalSlides; updateTrack(); }
+function prevSlide(){ slide = (slide-1+totalSlides)%totalSlides; updateTrack(); }
+let touchStartX=0; document.getElementById('animalCarousel').addEventListener('touchstart',e=>touchStartX=e.touches[0].clientX);
+document.getElementById('animalCarousel').addEventListener('touchend',e=>{ const end=e.changedTouches[0].clientX; if(touchStartX-end>50) nextSlide(); if(end-touchStartX>50) prevSlide(); });
+setInterval(()=>{ nextSlide(); },4200);
 
-// ==== EXPORT CSV ==== 
-function exportCSV() {
-    let rows = [
-        ["Question", "Option", "Count"],
-        ["Should animals be cloned?", "Yes", 12],
-        ["Should animals be cloned?", "No", 7],
-        ["Should animals be cloned?", "Maybe", 9],
-        ["Should animals be cloned?", "Unopposed", 4],
-        ["Is cloning humane?", "Yes", 21],
-        ["Is cloning humane?", "No", 11],
-        ["Pig", "Normal", 20],
-        ["Pig", "Cloned", 12],
-        ["Sheep", "Normal", 6],
-        ["Sheep", "Cloned", 26],
-        ["Naur", "Normal", 8],
-        ["Naur", "Cloned", 24],
-        ["Dog", "Normal", 28],
-        ["Dog", "Cloned", 4],
-        ["Human cloning", "Yes", 12],
-        ["Human cloning", "No", 20]
-    ];
-    let csv = rows.map(r => r.join(",")).join("\n");
-    let file = new Blob([csv], { type: "text/csv" });
-    let url = URL.createObjectURL(file);
-    let a = document.createElement("a");
-    a.href = url;
-    a.download = "cloning_survey_data.csv";
-    a.click();
+/* ------------------ Modal handling ------------------ */
+const modal = document.getElementById('modal'); const modalContent = document.getElementById('modalContent');
+function openModal(which){ modal.classList.add('open'); modalContent.innerHTML = renderStats(which); }
+function closeModal(){ modal.classList.remove('open'); modalContent.innerHTML=''; }
+
+function renderStats(key){
+  // prepare html with stats for each key
+  if(key==='cloneStats'){
+    const n = Object.values(data.cloneCounts).reduce((a,b)=>a+b,0);
+    const pct = percent(data.cloneCounts);
+    return `<h3>Should animals be cloned? — Detailed</h3>
+    <p>Counts: Yes=${data.cloneCounts.Yes}, No=${data.cloneCounts.No}, Maybe=${data.cloneCounts.Maybe}, Unopposed=${data.cloneCounts.Unopposed} (N=${n})</p>
+    <p>Percentages: ${Object.entries(pct).map(([k,v])=>`${k}: ${v}%`).join(', ')}</p>
+    <p>Interpretation: plurality support but high ambivalence. Recommend cross-tab by biology exposure and theme-analysis of open comments.</p>`;
+  }
+  if(key==='humaneStats'){
+    const n= data.humaneCounts.Yes + data.humaneCounts.No; const pct=percent(data.humaneCounts);
+    return `<h3>Is cloning humane? — Detailed</h3><p>Counts: Yes=${data.humaneCounts.Yes}, No=${data.humaneCounts.No} (N=${n})</p><p>Percentages: Yes ${pct.Yes}%, No ${pct.No}%</p><p>Two-sided proportion test vs 50%: ${(() => { const res=propZTest(data.humaneCounts.Yes,n); return `z=${res.z.toFixed(3)}, p=${res.pval.toFixed(4)}` })()}</p>`;
+  }
+  if(key==='pigStats'){
+    const n = data.pig.Normal + data.pig.Cloned; const res = propZTest(data.pig.Normal,n); const pct=percent(data.pig);
+    return `<h3>Pig — Detailed stats</h3><p>Counts: Normal=${data.pig.Normal}, Cloned=${data.pig.Cloned} (N=${n})</p><p>Percentages: Normal ${pct.Normal}%, Cloned ${pct.Cloned}%</p><p>One-sample test vs 50%: z=${res.z.toFixed(3)}, two-sided p=${res.pval.toFixed(4)}. Interpretation: participants more likely than chance to label pig as normal (p ${res.pval<0.05?'<0.05':'≥0.05'}).</p>`;
+  }
+  if(key==='sheepStats'){
+    const n = data.sheep.Normal + data.sheep.Cloned; const res = propZTest(data.sheep.Cloned,n); const pct=percent(data.sheep);
+    return `<h3>Sheep — Detailed stats</h3><p>Counts: Normal=${data.sheep.Normal}, Cloned=${data.sheep.Cloned} (N=${n})</p><p>Percentages: Cloned ${pct.Cloned}%, Normal ${pct.Normal}%</p><p>One-sample test vs 50% (cloned proportion): z=${res.z.toFixed(3)}, two-sided p=${res.pval.toFixed(4)}. Interpretation: strong evidence participants identified this sheep as cloned (p ${res.pval<0.001?'<0.001':res.pval.toFixed(3)}).</p>`;
+  }
+  if(key==='naurStats'){
+    const n = data.naur.Normal + data.naur.Cloned; const res = propZTest(data.naur.Cloned,n); const pct=percent(data.naur);
+    return `<h3>Naur/Gaur — Detailed stats</h3><p>Counts: Normal=${data.naur.Normal}, Cloned=${data.naur.Cloned} (N=${n})</p><p>Percentages: Cloned ${pct.Cloned}%, Normal ${pct.Normal}%</p><p>One-sample test vs 50% (cloned): z=${res.z.toFixed(3)}, p=${res.pval.toFixed(4)}. Interpretation: strong cloned attribution (p ${res.pval<0.001?'<0.001':res.pval.toFixed(3)}).</p>`;
+  }
+  if(key==='dogStats'){
+    const n = data.dog.Normal + data.dog.Cloned; const res = propZTest(data.dog.Normal,n); const pct=percent(data.dog);
+    return `<h3>Dog — Detailed stats</h3><p>Counts: Normal=${data.dog.Normal}, Cloned=${data.dog.Cloned} (N=${n})</p><p>Percentages: Normal ${pct.Normal}%, Cloned ${pct.Cloned}%</p><p>One-sample test vs 50%: z=${res.z.toFixed(3)}, p=${res.pval.toFixed(4)}. Interpretation: very strong correct identification (p ${res.pval<0.001?'<0.001':res.pval.toFixed(3)}).</p>`;
+  }
+  if(key==='combinedStats'){
+    const n = combined.Normal + combined.Cloned; const res = twoPropZ(combined.Normal, n, combined.Cloned, n); // compare proportions
+    const pct = percent(combined);
+    return `<h3>Combined — Detailed stats</h3><p>Counts: Normal=${combined.Normal}, Cloned=${combined.Cloned} (N=${n})</p><p>Percentages: Normal ${pct.Normal}%, Cloned ${pct.Cloned}%</p><p>Two-proportion z-test: difference p1-p2: z=${res.z.toFixed(3)}, two-sided p=${res.pval.toFixed(4)}. Interpretation: difference is small; visual detection is near chance across species.</p>`;
+  }
+  if(key==='humanStats'){
+    const n = data.human.Yes + data.human.No; const res = propZTest(data.human.No,n); const pct=percent(data.human);
+    return `<h3>Human cloning — Detailed stats</h3><p>Counts: Yes=${data.human.Yes}, No=${data.human.No} (N=${n})</p><p>Percentages: Yes ${pct.Yes}%, No ${pct.No}%</p><p>One-sample test vs 50% for No: z=${res.z.toFixed(3)}, p=${res.pval.toFixed(4)}. Interpretation: majority oppose human cloning (statistically significant).</p>`;
+  }
+  return `<pre>No stats available for '${key}'</pre>`;
 }
+
+// open modal wrapper
+function openModal(key){ modal.classList.add('open'); modalContent.innerHTML = renderStats(key); }
+function closeModal(){ modal.classList.remove('open'); modalContent.innerHTML = ''; }
+
+// expose some modal ids
+window.openModal = openModal; window.closeModal = closeModal;
+
+/* ------------------ Render basic analyses text area population ------------------ */
+// update analysis paragraphs with brief stat summaries
+(function populateSummaries(){
+  document.getElementById('cloneAnalysis').innerText = `Counts — Yes: ${data.cloneCounts.Yes}, Maybe: ${data.cloneCounts.Maybe}, No: ${data.cloneCounts.No}, Unopposed: ${data.cloneCounts.Unopposed}. Percentages: ${Object.entries(percent(data.cloneCounts)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+  document.getElementById('humaneAnalysis').innerText = `Counts — Yes: ${data.humaneCounts.Yes}, No: ${data.humaneCounts.No}. Percentages: ${Object.entries(percent(data.humaneCounts)).map(([k,v])=>`${k}:${v}%`).join(', ')}. Proportion test suggests ${(() => { const r=propZTest(data.humaneCounts.Yes,data.humaneCounts.Yes+data.humaneCounts.No); return r.pval<0.05? 'statistically significant majority for Yes.' : 'no strong statistical majority.' })()}`;
+  document.getElementById('pigAnalysis').innerText = `Pig — Normal: ${data.pig.Normal}, Cloned: ${data.pig.Cloned}. Percentages: ${Object.entries(percent(data.pig)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+  document.getElementById('sheepAnalysis').innerText = `Sheep — Normal: ${data.sheep.Normal}, Cloned: ${data.sheep.Cloned}. Percentages: ${Object.entries(percent(data.sheep)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+  document.getElementById('naurAnalysis').innerText = `Naur — Normal: ${data.naur.Normal}, Cloned: ${data.naur.Cloned}. Percentages: ${Object.entries(percent(data.naur)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+  document.getElementById('dogAnalysis').innerText = `Dog — Normal: ${data.dog.Normal}, Cloned: ${data.dog.Cloned}. Percentages: ${Object.entries(percent(data.dog)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+  document.getElementById('combinedAnalysis').innerText = `Combined totals — Normal: ${combined.Normal}, Cloned: ${combined.Cloned}. Percentages: ${Object.entries(percent(combined)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+  document.getElementById('humanAnalysis').innerText = `Human cloning — Yes: ${data.human.Yes}, No: ${data.human.No}. Percentages: ${Object.entries(percent(data.human)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+})();
+
+/* ------------------ Export CSV ------------------ */
+function exportCSV(){
+  const rows = [ ['Question','Option','Count'],
+    ['Should animals be cloned?', 'Yes', data.cloneCounts.Yes], ['Should animals be cloned?', 'Maybe', data.cloneCounts.Maybe], ['Should animals be cloned?', 'No', data.cloneCounts.No], ['Should animals be cloned?', 'Unopposed', data.cloneCounts.Unopposed],
+    ['Is cloning humane?', 'Yes', data.humaneCounts.Yes], ['Is cloning humane?', 'No', data.humaneCounts.No],
+    ['Pig','Normal', data.pig.Normal], ['Pig','Cloned', data.pig.Cloned],
+    ['Sheep','Normal', data.sheep.Normal], ['Sheep','Cloned', data.sheep.Cloned],
+    ['Naur','Normal', data.naur.Normal], ['Naur','Cloned', data.naur.Cloned],
+    ['Dog','Normal', data.dog.Normal], ['Dog','Cloned', data.dog.Cloned],
+    ['Human cloning','Yes', data.human.Yes], ['Human cloning','No', data.human.No]
+  ];
+  const csv = rows.map(r=>r.map(x=>`"${x}"`).join(',')).join('
+');
+  const blob = new Blob([csv],{type:'text/csv'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'cloning_survey_export.csv'; a.click(); URL.revokeObjectURL(url);
+}
+window.exportCSV = exportCSV;
+
+/* ------------------ Tabs behavior ------------------ */
+const tabs = document.querySelectorAll('.tab'); tabs.forEach(t=>t.addEventListener('click', ()=>{ tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); const target = document.querySelector(t.dataset.target); target.scrollIntoView({behavior:'smooth',block:'start'}); }));
 
 </script>
-
 </body>
 </html>

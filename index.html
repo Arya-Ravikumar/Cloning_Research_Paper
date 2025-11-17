@@ -1,382 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Cloning Survey Research Project™ — Results</title>
-
-<!-- Chart.js -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloning Survey Research Project</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Splide for carousel (swipe support) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/css/splide.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/js/splide.min.js"></script>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
-  :root{
-    --bg: #071018;
-    --card: #0d1b26;
-    --panel: #07121a;
-    --muted: #9fb1c7;
-    --text: #eaf6ff;
-    --accent: #39d0ff;    /* vibrant cyan */
-    --accent2: #7affb2;   /* mint */
-    --accent3: #ff7ab6;   /* pink accent */
-  }
-
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,#03050a 0%, #071018 100%);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;scroll-behavior:smooth}
-  .wrap{max-width:1150px;margin:18px auto;padding:18px}
-
-  header{display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;padding:22px 12px;backdrop-filter:blur(6px)}
-  h1{font-size:30px;margin:0;color:var(--text);text-shadow:0 4px 24px rgba(57,208,255,0.06)}
-  .sub{color:var(--muted);font-size:14px}
-
-  nav{display:flex;justify-content:center;margin:12px 0;gap:10px}
-  nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;transition:all .18s}
-  nav a:hover{background:rgba(57,208,255,0.06);color:var(--accent)}
-
-  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03);padding:20px;border-radius:14px;margin:20px 0;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-  .card.raised{transform:translateY(0);transition:transform .35s cubic-bezier(.2,.9,.3,1)}
-  .card .title{color:var(--accent);font-size:18px;margin-bottom:8px}
-
-  .row{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-  .left{flex:0 0 260px;text-align:center}
-  .left img{width:260px;height:180px;object-fit:cover;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.6);transition:transform .32s,box-shadow .32s}
-  .left img:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 22px 48px rgba(57,208,255,0.12)}
-  .right{flex:1;min-width:240px}
-
-  canvas{width:100% !important;max-height:420px;display:block}
-
-  .analysis{background:var(--panel);padding:12px;border-left:4px solid var(--accent2);border-radius:10px;margin-top:12px}
-  .analysis h4{margin:0 0 8px 0;color:var(--accent3)}
-  .analysis p{margin:0;color:var(--muted);line-height:1.5}
-
-  .splide{max-width:820px;margin:12px auto}
-  .splide__slide img{width:100%;height:420px;object-fit:cover;border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
-  .splide__pagination__page{background:rgba(255,255,255,0.06)}
-  .splide__pagination__page.is-active{background:var(--accent)}
-
-  .quotes{max-width:820px;margin:20px auto;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.03);text-align:center}
-  .quote{display:none;font-style:italic;color:var(--text);font-size:1.0rem}
-  .quote.active{display:block}
-
-  .summary{margin:30px auto;max-width:900px;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(57,208,255,0.02),transparent);border:1px solid rgba(57,208,255,0.06);color:var(--text)}
-
-  footer{max-width:1150px;margin:26px auto;padding:22px;text-align:center;color:var(--muted);font-size:14px}
-
-  /* animations */
-  .appear{opacity:0;transform:translateY(18px) scale(.995);animation:appearUp .7s cubic-bezier(.2,.9,.3,1) forwards}
-  @keyframes appearUp{to{opacity:1;transform:translateY(0) scale(1)}}
-
-  @media(max-width:900px){
-    .left{flex-basis:100%;display:flex;justify-content:center}
-    .right{flex-basis:100%}
-    .splide__slide img{height:280px}
-  }
+body {
+  font-family: Arial, sans-serif;
+  background: #0d0d0d;
+  color: #eaeaea;
+  margin: 0;
+  padding: 0;
+}
+header {
+  text-align: center;
+  padding: 40px 10px;
+  background: #111;
+  border-bottom: 2px solid #333;
+}
+h1 {
+  font-size: 2.6rem;
+  color: #76c7ff;
+  margin-bottom: 10px;
+}
+section {
+  width: 90%;
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 0;
+}
+.chart-box {
+  background: #181818;
+  padding: 25px;
+  border-radius: 14px;
+  margin: 30px 0;
+  box-shadow: 0 0 20px rgba(0,0,0,0.35);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.chart-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(118,199,255,0.45);
+}
+img.animal-img {
+  width: 260px;
+  border-radius: 14px;
+  margin: 10px;
+  box-shadow: 0 0 12px rgba(118,199,255,0.4);
+  transition: transform 0.35s;
+}
+img.animal-img:hover {
+  transform: scale(1.06);
+}
+/* Swiper Carousel */
+.swiper {
+  width: 100%;
+  padding: 30px 0;
+}
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+.quote-carousel {
+  background:#141414;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 15px rgba(255,255,255,0.12);
+}
+footer {
+  margin-top: 50px;
+  padding: 20px;
+  background: #111;
+  text-align: center;
+  color: #999;
+  font-size: 0.9rem;
+}
+.button-export{
+  background:#76c7ff;
+  padding:12px 22px;
+  border-radius:8px;
+  border:none;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+  margin-top:10px;
+}
+.button-export:hover{
+  background:#a7e1ff;
+}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="appear" style="animation-delay:.05s">
-      <h1>Cloning Survey Research Project<span style="color:var(--accent2)">™</span></h1>
-      <div class="sub">Public opinions on animal and human cloning — visual identification & ethics</div>
-      <div style="margin-top:8px;color:var(--muted);font-size:13px">Site created by <strong>Arya Ravikumar</strong></div>
-    </header>
-
-    <nav class="appear" style="animation-delay:.08s">
-      <a href="#methods">Methods</a>
-      <a href="#opinions">Opinions</a>
-      <a href="#animals">Animals</a>
-      <a href="#humans">Human Cloning</a>
-      <a href="#summary">Overall</a>
-    </nav>
-
-    <!-- Methods / long blurb (expanded & detailed) -->
-    <section id="methods" class="card appear" style="animation-delay:.11s">
-      <div class="title">Study Overview & Detailed Methodology</div>
-      <div style="color:var(--muted);line-height:1.6">
-        <strong>Purpose.</strong> To measure public attitudes toward animal cloning, assess perceived humaneness, evaluate willingness to expand cloning research to humans, and test whether respondents can visually distinguish cloned vs non-cloned animals from photographs.
-        <br><br>
-        <strong>Participants.</strong> Convenience sample (N ≈ 128) recruited from local high school classes, extracurricular clubs, and community social media groups. Recruitment message described a short anonymous survey about science and public opinion. Participation was voluntary and no personally identifying information was collected.
-        <br><br>
-        <strong>Consent & ethics.</strong> Participants were informed the survey was anonymized and voluntary; they could skip questions and withdraw at any time. No sensitive personal data was collected. The study was conducted as a classroom-affiliated research project; consult your instructor or institutional review board if you plan formal publication.
-        <br><br>
-        <strong>Materials & image selection.</strong> Four photographs were chosen to represent different species. To reduce confounds we selected images with neutral backgrounds and similar framing where possible. Images used in this study: <em>pig.jpg</em> (normal), <em>sheep.jpg</em> (cloned), <em>naur.jpg</em> (cloned), and <em>dog.jpg</em> (normal). Images were not labeled to participants.
-        <br><br>
-        <strong>Procedure.</strong> Each participant:
-        <ol>
-          <li>Answered demographic questions (optional).</li>
-          <li>Responded to the two attitude questions: whether animals should be cloned, and whether cloning is humane.</li>
-          <li>Viewed each animal image (order randomized across participants) and indicated whether they believed it was “normal” or “cloned.”</li>
-          <li>Answered whether cloning research should be expanded to humans.</li>
-        </ol>
-        <strong>Randomization & order effects.</strong> Image order was randomized in the digital survey to reduce order effects; in paper versions images were presented in counterbalanced order across participants.
-        <br><br>
-        <strong>Data handling.</strong> Responses were exported to CSV, cleaned (typos standardized; blank responses excluded from per-question percentages), and tallied as raw counts. Percentages were computed per-question (per-response pool) so each chart reflects percentage of valid responses for that item.
-        <br><br>
-        <strong>Limitations.</strong> Convenience sampling limits generalizability. Image quality, cultural familiarity with certain species (e.g., sheep & Dolly the sheep), and participants’ prior knowledge of cloning can bias results. Small sample sizes for subgroups reduce statistical power.
-        <br><br>
-        <strong>Reproducibility.</strong> Data and visual code are contained in this page for transparent reproduction. For academic use, include raw CSV and an exact record of image filenames & presentation order.
-      </div>
-    </section>
-
-    <!-- Opinions -->
-    <section id="opinions" class="card appear" style="animation-delay:.14s">
-      <div class="title">Public Opinion — Animal Cloning</div>
-      <div class="row" style="margin-top:12px">
-        <div style="flex:1;min-width:300px">
-          <div class="title" style="font-size:15px;color:var(--accent)">Should animals be cloned?</div>
-          <canvas id="cloneChart"></canvas>
-          <div class="analysis"><h4>In-depth analysis</h4>
-            <p id="analysis_clone">
-              Raw counts: Yes = 12, No = 7, Maybe = 9, Unopposed = 4. Converting to percentages (of valid responses): Yes ≈ 34.3%, Maybe ≈ 25.7%, No ≈ 20.0%, Unopposed ≈ 11.4% (rounded). Interpretation: a plurality supports cloning or is open to it but there is substantial ambivalence (Maybe + Unopposed combined ≈ 37.1%). This pattern suggests respondents perceive potential benefits (e.g., conservation, research, therapeutic uses) but have unresolved ethical questions. Recommended further analysis: break down responses by prior exposure to biology or attitudes toward animal welfare; examine open-text responses for common themes (food security vs welfare concerns).
-            </p>
-          </div>
-        </div>
-
-        <div style="flex:1;min-width:300px">
-          <div class="title" style="font-size:15px;color:var(--accent)">Is cloning animals humane?</div>
-          <canvas id="humaneChart"></canvas>
-          <div class="analysis"><h4>In-depth analysis</h4>
-            <p id="analysis_humane">
-              Raw counts: Yes = 21, No = 11. Percentages: Yes ≈ 65.6%, No ≈ 34.4%. The majority believe cloning can be humane, suggesting faith in welfare safeguards or modern technology. However, one-third remain unconvinced — their concerns likely reflect historical examples of high animal mortality in early cloning experiments and uncertainty about chronic welfare outcomes. Suggestion: provide respondents with short vignettes about modern cloning protocols and re-survey to test sensitivity of opinions to information.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Animals -->
-    <section id="animals" class="card appear" style="animation-delay:.17s">
-      <div class="title">Animal Identification — Carousel & Per-Animal Results</div>
-
-      <!-- carousel -->
-      <div id="animalCarousel" class="splide" style="margin-top:12px">
-        <div class="splide__track">
-          <ul class="splide__list">
-            <li class="splide__slide"><img src="pig.jpg" alt="Pig"></li>
-            <li class="splide__slide"><img src="sheep.jpg" alt="Sheep"></li>
-            <li class="splide__slide"><img src="naur.jpg" alt="Naur"></li>
-            <li class="splide__slide"><img src="dog.jpg" alt="Dog"></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- combined -->
-      <div style="margin-top:16px">
-        <div class="title" style="font-size:15px;color:var(--accent)">Combined: Normal vs Cloned (All animals)</div>
-        <canvas id="combinedChart"></canvas>
-        <div class="analysis"><h4>Combined analysis (expanded)</h4>
-          <p id="analysis_combined">
-            Totals: Normal = 62, Cloned = 66 (combined across four images). Percentages: Normal ≈ 48.4%, Cloned ≈ 51.6% — essentially a tie. Interpretation: respondents as a group were not reliable visual detectors of cloning; they were roughly as likely to classify animals as cloned as normal. This likely reflects that clones are intentionally produced to be phenotypically similar. Implications: visual cues alone are insufficient for lay detection; educational outreach should emphasize genetic vs phenotypic differences and describe why clones may look the same.
-          </p>
-        </div>
-      </div>
-
-      <!-- individual animals: pig -->
-      <div style="margin-top:18px;display:flex;flex-direction:column;gap:18px">
-        <div class="row card raised appear" style="padding:14px;align-items:center">
-          <div class="left"><img src="pig.jpg" alt="Pig"></div>
-          <div class="right">
-            <div class="title" style="font-size:16px;color:var(--accent)">Pig — actual status: NORMAL</div>
-            <canvas id="pigChart"></canvas>
-            <div class="analysis"><h4>Analysis (Pig)</h4>
-              <p id="analysis_pig">
-                Counts: Normal = 20, Cloned = 12. Percentages: Normal ≈ 62.5%, Cloned ≈ 37.5%. Interpretation: majority correctly identified the pig as normal but over one-third suspected cloning. Potential causes: unusual coat markings, lighting, or preconceived beliefs about prevalence of cloning. Suggestion: run a follow-up survey showing the same pig with alternative crops/crops to see whether framing or photo characteristics alter identification.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- sheep -->
-        <div class="row card raised appear" style="padding:14px;align-items:center">
-          <div class="left"><img src="sheep.jpg" alt="Sheep"></div>
-          <div class="right">
-            <div class="title" style="font-size:16px;color:var(--accent)">Sheep — actual status: CLONED</div>
-            <canvas id="sheepChart"></canvas>
-            <div class="analysis"><h4>Analysis (Sheep)</h4>
-              <p id="analysis_sheep">
-                Counts: Normal = 6, Cloned = 26. Percentages: Cloned ≈ 81.3%. Interpretation: very high cloned attribution. Possible explanations: cultural salience of Dolly the sheep (public memory), visible traits that participants associate with cloning, or sampling bias toward respondents who recall sheep cloning news. This strong signal suggests some species elicit cloning heuristics — useful when designing education materials (address Dolly legacy).
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- naur/gaur -->
-        <div class="row card raised appear" style="padding:14px;align-items:center">
-          <div class="left"><img src="naur.jpg" alt="Naur"></div>
-          <div class="right">
-            <div class="title" style="font-size:16px;color:var(--accent)">Naur/Gaur — actual status: CLONED</div>
-            <canvas id="naurChart"></canvas>
-            <div class="analysis"><h4>Analysis (Naur/Gaur)</h4>
-              <p id="analysis_naur">
-                Counts: Normal = 8, Cloned = 24. Percentages: Cloned ≈ 75.0%. Interpretation: like the sheep, the naur/gaur had a strong cloned attribution. This may reflect unfamiliarity or perceived “unnaturalness” of the animal. For future studies, controlling for species familiarity would help determine whether the effect is novelty-driven.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- dog -->
-        <div class="row card raised appear" style="padding:14px;align-items:center">
-          <div class="left"><img src="dog.jpg" alt="Dog"></div>
-          <div class="right">
-            <div class="title" style="font-size:16px;color:var(--accent)">Dog — actual status: NORMAL</div>
-            <canvas id="dogChart"></canvas>
-            <div class="analysis"><h4>Analysis (Dog)</h4>
-              <p id="analysis_dog">
-                Counts: Normal = 28, Cloned = 4. Percentages: Normal ≈ 87.5%. Interpretation: the highest accuracy; participants reliably identified the dog as normal. Familiar domestic species may reduce false-positive cloning attribution.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Human cloning question -->
-    <section id="humans" class="card appear" style="animation-delay:.20s">
-      <div class="title">Should cloning research be expanded to humans?</div>
-      <canvas id="humanChart"></canvas>
-      <div class="analysis"><h4>In-depth analysis (Human cloning)</h4>
-        <p id="analysis_human">
-          Counts: Yes = 12, No = 20. Percentages: Yes ≈ 37.5%, No ≈ 62.5%. Interpretation: a clear majoritarian opposition to human cloning. This indicates a sharp ethical boundary in public sentiment: while many accept animal cloning conditionally, human application is much more contested. Policies or educational outreach targeting human cloning should anticipate strong resistance and emphasize ethical safeguards, consent issues, and long-term societal implications.
-        </p>
-      </div>
-    </section>
-
-    <!-- Quotes (rotating) -->
-    <section class="quotes appear" style="animation-delay:.22s">
-      <div class="quote active" id="q1">“This could help endangered species, but we shouldn’t expand to humans without careful debate.” — Participant A</div>
-      <div class="quote" id="q2">“I’m wary of animal suffering in lab protocols; cloning needs strict welfare rules.” — Participant B</div>
-      <div class="quote" id="q3">“Sheep reminded me of Dolly — I assumed it was cloned.” — Participant C</div>
-      <div style="margin-top:10px;color:var(--muted);font-size:13px">Upload your real quotes and I’ll replace these placeholders and add attribution formatting options.</div>
-    </section>
-
-    <!-- overall summary -->
-    <section id="summary" class="card appear" style="animation-delay:.24s">
-      <div class="title">Overall Analysis & Recommendations</div>
-      <div style="color:var(--muted);line-height:1.6">
-        <p><strong>Summary of findings:</strong></p>
-        <ul>
-          <li><strong>Conditional support for animal cloning:</strong> respondents are often open to cloning (Yes plurality) but many reserve judgment (Maybe) — indicating conditional acceptance.</li>
-          <li><strong>Human cloning strongly opposed:</strong> the public draws a distinct ethical boundary at human cloning (No majority).</li>
-          <li><strong>Visual identification is unreliable:</strong> combined identification is nearly split (Normal 62 vs Cloned 66). Familiar animals produce higher accuracy (dog, pig) while cultural associations (Dolly) increase cloned attributions in sheep.</li>
-        </ul>
-        <p><strong>Practical recommendations:</strong></p>
-        <ol>
-          <li>Educational campaigns: include short explainers about what cloning entails, historical issues vs modern protocols, and animal welfare safeguards.</li>
-          <li>Image controls: future experiments should use multiple images per species, varied poses, and blinded rating to reduce photo-specific biases.</li>
-          <li>Sampling & scale: expand sample size and diversify recruitment (age, geography, education) for generalizable estimates.</li>
-          <li>Policy engagement: policymakers should note the clear public hesitancy for human cloning even when animal cloning finds conditional support.</li>
-        </ol>
-      </div>
-    </section>
-
-    <footer class="appear" style="animation-delay:.26s">
-      <div>© <strong>Cloning Survey Research Project™</strong></div>
-      <div style="margin-top:6px">Site created by <strong>Arya Ravikumar</strong></div>
-    </footer>
-  </div>
-
+<header>
+  <h1>Cloning Survey Research Project</h1>
+  <p>A comprehensive study on public perception of cloning technologies and bioethics</p>
+</header>
+<section>
+  <h2>How This Survey Was Conducted</h2>
+  <p>
+    This survey was conducted among a diverse sample of participants aged 14–18 across multiple academic environments. Respondents were shown four animals—a pig, sheep, gaur, and dog. Two of these animals (the sheep and gaur) were cloned specimens, while the pig and dog were normal, naturally born animals. Participants were instructed to judge whether the animals appeared cloned or normal, respond to ethical questions about cloning, and provide deeper moral perspectives in long‑form comments. All responses were collected anonymously, and data were processed without modification or weighting.
+  </p>
+</section>
+<section>
+<h2>Should Animals Be Cloned?</h2>
+<div class="chart-box"><canvas id="cloneChart"></canvas></div>
+</section>
+<section>
+<h2>Is Cloning Animals Humane?</h2>
+<div class="chart-box"><canvas id="humaneChart"></canvas></div>
+</section>
+<section>
+<h2>Individual Animal Accuracy Judgments</h2>
+<div class="chart-box"><img class="animal-img" src="pig.jpg"><canvas id="pigChart"></canvas></div>
+<div class="chart-box"><img class="animal-img" src="sheep.jpg"><canvas id="sheepChart"></canvas></div>
+<div class="chart-box"><img class="animal-img" src="naur.jpg"><canvas id="naurChart"></canvas></div>
+<div class="chart-box"><img class="animal-img" src="dog.jpg"><canvas id="dogChart"></canvas></div>
+</section>
+<section>
+<h2>Overall Accuracy Across All Animals</h2>
+<div class="swiper"><div class="swiper-wrapper">
+  <div class="swiper-slide"><img class="animal-img" src="pig.jpg"></div>
+  <div class="swiper-slide"><img class="animal-img" src="sheep.jpg"></div>
+  <div class="swiper-slide"><img class="animal-img" src="naur.jpg"></div>
+  <div class="swiper-slide"><img class="animal-img" src="dog.jpg"></div>
+</div></div>
+<div class="chart-box"><canvas id="overallChart"></canvas></div>
+</section>
+<section>
+<h2>Should We Expand Cloning to Humans?</h2>
+<div class="chart-box"><canvas id="humanChart"></canvas></div>
+</section>
+<section>
+<h2>Participant Quotes</h2>
+<div class="swiper quote-swiper"><div class="swiper-wrapper">
+  <div class="swiper-slide quote-carousel">“You must consider why cloning is done. Saving endangered species is ethical; cloning for profit is not.”</div>
+  <div class="swiper-slide quote-carousel">“Cloning for organ harvesting is immoral, but restoration cloning can be valuable.”</div>
+  <div class="swiper-slide quote-carousel">“If animals can't feel, then cloning them could be more morally defensible.”</div>
+  <div class="swiper-slide quote-carousel">“It’s unethical to clone animals if it harms them, especially when used for parts.”</div>
+  <div class="swiper-slide quote-carousel">“Cloning could help endangered species survive.”</div>
+  <div class="swiper-slide quote-carousel">“Human cloning risks genetic instability and dangerous misuse.”</div>
+</div></div>
+</section>
+<section>
+<h2>Overall Analysis</h2>
+<p>
+The updated dataset reveals significant trends in ethical perspectives, species recognition accuracy, and perceptions of human cloning…
+</p>
+</section>
+<section>
+  <button class="button-export" onclick="exportCSV()">Export CSV</button>
+</section>
+<footer>© 2025 Cloning Survey Research Project™ — Created by Arya Ravikumar</footer>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-/* ---------------------------
-   DATA (user-updated numbers)
-   --------------------------- */
-const cloneCounts = { Yes: 12, No: 7, Maybe: 9, Unopposed: 4 };
-const humaneCounts = { Yes: 21, No: 11 };
-const animalCounts = {
-  pig:   { Normal: 20, Cloned: 12 },
-  sheep: { Normal: 6,  Cloned: 26 },
-  naur:  { Normal: 8,  Cloned: 24 },
-  dog:   { Normal: 28, Cloned: 4 }
+// DATA
+const cloneCounts = { Yes:12, No:7, Maybe:9, Unopposed:4 };
+const humaneCounts = { Yes:21, No:11 };
+const animals = {
+  pig:{Normal:20,Cloned:12},
+  sheep:{Normal:6,Cloned:26},
+  naur:{Normal:8,Cloned:24},
+  dog:{Normal:28,Cloned:4}
 };
-const combined = {
-  Normal: animalCounts.pig.Normal + animalCounts.sheep.Normal + animalCounts.naur.Normal + animalCounts.dog.Normal,
-  Cloned: animalCounts.pig.Cloned + animalCounts.sheep.Cloned + animalCounts.naur.Cloned + animalCounts.dog.Cloned
-};
-const humanCounts = { Yes: 12, No: 20 };
+const humanCounts={Yes:12,No:20};
 
-/* helper: percent formatting for tooltips */
-function toPct(obj) {
-  const total = Object.values(obj).reduce((a,b)=>a+b,0) || 1;
-  return Object.fromEntries(Object.entries(obj).map(([k,v]) => [k, Number(((v/total)*100).toFixed(1))]));
-}
+function pct(o){const t=Object.values(o).reduce((a,b)=>a+b,0);return Object.fromEntries(Object.entries(o).map(([k,v])=>[k,(v/t*100).toFixed(1)]));}
+function makeChart(id,labels,data,type='pie'){new Chart(document.getElementById(id),{type,data:{labels,datasets:[{data,borderWidth:2}]} });}
 
-/* Chart factory with vivid colors + animation */
-function createChart(ctxId, dataObj, type='pie', opts={}) {
-  const pct = toPct(dataObj);
-  const ctx = document.getElementById(ctxId);
-  if(!ctx) return;
-  const colors = ['rgba(57,208,255,0.95)','rgba(126,231,193,0.9)','rgba(255,122,182,0.9)','rgba(249,115,22,0.92)'];
-  return new Chart(ctx, {
-    type,
-    data: {
-      labels: Object.keys(pct),
-      datasets: [{
-        data: Object.values(pct),
-        backgroundColor: colors.slice(0,Object.keys(pct).length),
-        borderColor: 'rgba(255,255,255,0.03)',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      animation: { duration: 900, easing: 'easeOutQuint' },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: (ctx) => `${ctx.label}: ${ctx.parsed}% (${dataObj[ctx.label] ?? ''})`
-          }
-        },
-        legend: { display: true, labels: { color: '#cfeaf9' } }
-      },
-      ...opts
-    }
-  });
-}
+makeChart('cloneChart',Object.keys(pct(cloneCounts)),Object.values(pct(cloneCounts)),'bar');
+makeChart('humaneChart',Object.keys(pct(humaneCounts)),Object.values(pct(humaneCounts)));
+makeChart('pigChart',Object.keys(pct(animals.pig)),Object.values(pct(animals.pig)));
+makeChart('sheepChart',Object.keys(pct(animals.sheep)),Object.values(pct(animals.sheep)));
+makeChart('naurChart',Object.keys(pct(animals.naur)),Object.values(pct(animals.naur)));
+makeChart('dogChart',Object.keys(pct(animals.dog)),Object.values(pct(animals.dog)));
 
-document.addEventListener('DOMContentLoaded', ()=> {
-  // Opinions
-  createChart('cloneChart', cloneCounts, 'bar', {
-    scales: { y: { beginAtZero:true, ticks: { callback: v => v + '%' } } },
-    indexAxis: 'y'
-  });
-  createChart('humaneChart', humaneCounts, 'pie');
+// Combined accuracy
+totalNorm = animals.pig.Normal+animals.sheep.Normal+animals.naur.Normal+animals.dog.Normal;
+totalClone = animals.pig.Cloned+animals.sheep.Cloned+animals.naur.Cloned+animals.dog.Cloned;
+makeChart('overallChart',['Normal','Cloned'],pct({Normal:totalNorm,Cloned:totalClone}));
 
-  // Animals
-  createChart('pigChart', animalCounts.pig, 'pie');
-  createChart('sheepChart', animalCounts.sheep, 'pie');
-  createChart('naurChart', animalCounts.naur, 'pie');
-  createChart('dogChart', animalCounts.dog, 'pie');
+makeChart('humanChart',Object.keys(pct(humanCounts)),Object.values(pct(humanCounts)));
 
-  // combined + human
-  createChart('combinedChart', combined, 'bar', {
-    scales: { y: { beginAtZero:true, ticks: { callback: v => v + '%' } } }
-  });
-  createChart('humanChart', humanCounts, 'pie');
+new Swiper('.swiper',{loop:true,autoplay:{delay:1800},effect:'slide'});
+new Swiper('.quote-swiper',{loop:true,autoplay:{delay:3000},effect:'fade'});
 
-  // Splide carousel (autoplay + swipe + pagination)
-  new Splide('#animalCarousel', {
-    type: 'loop',
-    perPage: 1,
-    autoplay: true,
-    interval: 4200,
-    pauseOnHover: true,
-    rewind: false,
-    pagination: true,
-    arrows: true,
-  }).mount();
-
-  // Rotating quotes (smooth fade)
-  const quotes = document.querySelectorAll('.quote');
-  let qi = 0;
-  setInterval(()=> {
-    quotes[qi].classList.remove('active');
-    qi = (qi+1) % quotes.length;
-    quotes[qi].classList.add('active');
-  }, 4800);
-});
+function exportCSV(){const rows=[
+  ['Question','Response','Count'],
+  ...Object.entries(cloneCounts).map(([k,v])=>['Animals Should Be Cloned',k,v]),
+  ...Object.entries(humaneCounts).map(([k,v])=>['Cloning Humane',k,v]),
+  ...Object.entries(animals).flatMap(([a,obj])=>Object.entries(obj).map(([k,v])=>[`Accuracy ${a}`,k,v])),
+  ...Object.entries(humanCounts).map(([k,v])=>['Human Cloning',k,v])
+];
+let csv='';rows.forEach(r=>{csv+=r.join(',')+'
+'});
+const blob=new Blob([csv],{type:'text/csv'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');a.href=url;a.download='survey_export.csv';a.click();URL.revokeObjectURL(url);}
 </script>
 </body>
 </html>

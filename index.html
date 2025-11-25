@@ -3,157 +3,115 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cloning Survey Research Project — Master Report (Full)</title>
+  <title>Cloning Survey Research Project — Master</title>
 
   <!-- Chart.js v4 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-  <!--
-    MASTER FILE
-    - Put images pig.jpg, sheep.jpg, naur.jpg, dog.jpg next to this file.
-    - Open this file locally or deploy on GitHub Pages.
-    - This file intentionally includes verbose comments, expanded methods,
-      full statistical calculations, modals, calculators, carousels, and
-      a combination of smooth fade+slide (A) with minimal professional motion (C).
-  -->
-
   <style>
-  /* =========================================================================
+  /* -------------------------
      MASTER STYLES
-     - Dark theme baseline with an optional light mode toggle.
-     - Mix of smooth fade + slide (A) and minimal professional motion (C).
-     ========================================================================= */
-
+     ------------------------- */
   :root{
-    --bg: #051018;
-    --panel: #0d1b26;
-    --card: #07121a;
-    --muted: #9fb1c7;
-    --text: #eaf6ff;
-    --accent: #39d0ff;
-    --accent2: #7affb2;
-    --accent3: #ff7ab6;
-    --warn: #ffb347;
-    --glass: rgba(255,255,255,0.02);
+    --bg:#051018; --panel:#0d1b26; --card:#07121a; --muted:#9fb1c7; --text:#eaf6ff;
+    --accent:#39d0ff; --accent2:#7affb2; --accent3:#ff7ab6; --warn:#ffb347;
+    --vblue:#53a7ff; --vpink:#ff5894; --vgreen:#6aff8f; --vyellow:#ffe66a;
   }
-
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg,#02040a 0%,#071018 100%);
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    line-height:1.5;
+    margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    background:linear-gradient(180deg,#02040a 0%,#071018 100%); color:var(--text); -webkit-font-smoothing:antialiased;
   }
+  .container{ max-width:1200px; margin:18px auto; padding:18px; }
 
-  /* CONTAINER */
-  .container{ max-width:1200px; margin: 20px auto; padding: 18px; }
-
-  /* HEADER */
-  header{
-    position: sticky; top: 0; z-index: 9999;
-    background: linear-gradient(90deg,#07121a,#081822);
-    padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.03);
-    backdrop-filter: blur(4px);
-  }
+  /* Header */
+  header{ position:sticky; top:0; z-index:999; background:linear-gradient(90deg,#07121a,#081822); padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.03); }
   .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1200px; margin:auto; }
-  .brand{ font-weight:800; font-size:18px; letter-spacing:0.2px; }
+  .brand{ font-weight:800; font-size:18px; }
   .signature{ color:var(--muted); font-size:13px; }
 
-  /* tabs */
-  .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-  .tab{
-    padding:8px 12px; border-radius:10px; background:transparent;
-    color:var(--muted); cursor:pointer; border:1px solid rgba(255,255,255,0.02);
-    transition: transform .12s ease, box-shadow .12s ease, background .18s;
-  }
-  .tab:hover{ transform: translateY(-2px); }
-  .tab.active{ background: linear-gradient(90deg,var(--accent),var(--accent2)); color:#042; box-shadow:0 10px 30px rgba(57,208,255,0.06); }
+  /* Tabs */
+  .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .tab{ padding:8px 12px; border-radius:10px; background:transparent; color:var(--muted); cursor:pointer; border:1px solid rgba(255,255,255,0.02); transition:transform .12s, box-shadow .12s; }
+  .tab:hover{ transform:translateY(-2px); }
+  .tab.active{ background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#042; box-shadow:0 10px 30px rgba(57,208,255,0.06); }
 
-  /* sections / cards */
+  /* Sections and cards */
   .section{ padding:20px 12px; margin-top:18px; }
-  .card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
-    border: 1px solid rgba(255,255,255,0.03);
-    padding: 18px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  }
+  .card{ background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
   h1,h2,h3{ margin:0 0 12px 0; }
-  h2{ font-size:1.4rem; color:var(--accent2); }
+  h2{ font-size:1.2rem; color:var(--accent2); }
   p,li{ color:var(--muted); font-size:15px; }
-  ol{ padding-left:18px; }
 
-  /* rows & layout */
-  .row{ display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; }
-  .left{ flex:0 0 320px; }
-  .left img{ width:320px; height:220px; object-fit:cover; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,0.6); transition: transform .28s; }
-  .left img:hover{ transform: translateY(-6px) scale(1.02); }
-  .right{ flex:1; min-width:260px; }
-  .canvas-wrap{ max-width:720px; height:320px; margin-bottom:12px; }
-  canvas{ max-width:100%; height:100%; display:block; background:transparent; }
+  /* Side-by-side layout for charts & analysis */
+  .ss-row{ display:flex; gap:20px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; }
+  .ss-left{ flex: 1 1 58%; min-width:320px; }
+  .ss-right{ flex: 0 0 36%; min-width:260px; max-width:360px; }
 
-  /* chart-section wrapper to prevent overlapping */
-  .chart-section{ width:100%; display:block; margin-bottom:36px; padding-bottom:12px; }
-  .chart-container{
-    position:relative; width:100%; max-width:820px; margin:0 auto; background:var(--glass);
-    padding:18px; border-radius:14px; border:1px solid rgba(255,255,255,0.03);
-    box-shadow: 0 14px 40px rgba(0,0,0,0.5);
-    min-height: 380px; /* explicit min height prevents collapsed canvas */
-  }
-  .chart-container h4{ margin:0 0 12px 0; color:var(--accent); }
+  /* Chart container */
+  .chart-card{ background:rgba(255,255,255,0.02); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 12px 30px rgba(0,0,0,0.45); }
+  .chart-title{ color:var(--accent); margin-bottom:10px; font-weight:700; }
+  .chart-wrap{ width:100%; min-height:320px; display:flex; align-items:center; justify-content:center; }
+  canvas{ width:100% !important; height:380px !important; display:block; }
 
-  /* ensure canvases render at correct height */
-  .chart-container canvas{ width:100% !important; height: 320px !important; }
+  /* Analysis panel */
+  .analysis-panel{ background: rgba(0,0,0,0.22); padding:14px; border-radius:10px; border-left:4px solid var(--accent2); color:var(--muted); }
+  .analysis-panel h4{ margin:0 0 8px 0; color:var(--accent3); }
+  .analysis-panel p{ margin:0; line-height:1.5; }
 
-  /* analysis box below charts */
-  .analysis-box{ margin-top:20px; padding:14px; border-radius:10px; background: rgba(0,0,0,0.25); border-left:4px solid var(--accent2); color:var(--muted); }
+  /* Image & thumbnail */
+  .img-thumb{ width:100%; height:200px; object-fit:cover; border-radius:10px; box-shadow:0 12px 30px rgba(0,0,0,0.6); }
 
-  /* carousel */
+  /* Carousel */
   .carousel{ position:relative; overflow:hidden; border-radius:12px; margin:12px 0; background:rgba(255,255,255,0.01); padding:12px; }
   .carousel-track{ display:flex; transition:transform .6s cubic-bezier(.2,.9,.3,1); will-change:transform; }
   .carousel-slide{ min-width:100%; display:flex; justify-content:center; align-items:center; padding:10px; }
   .carousel-slide img{ width:360px; height:260px; object-fit:cover; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,0.6); }
 
-  /* quotes */
+  /* Quote carousel */
   .quote-card{ padding:12px; border-radius:12px; background:rgba(255,255,255,0.01); margin-top:10px; }
   .quote-track{ display:flex; transition:transform .6s ease; width:100%; }
   .quote-slide{ min-width:100%; box-sizing:border-box; padding:12px; opacity:0; transform:translateX(18px); transition:opacity .45s, transform .45s; }
   .quote-slide.active{ opacity:1; transform:none; }
   .quote-text{ color:var(--muted); line-height:1.6; font-size:16px; }
 
-  /* modal */
+  /* Modal */
   .modal{ position:fixed; left:0; top:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(1,6,12,0.6); visibility:hidden; opacity:0; transition:opacity .18s; z-index:9999; }
   .modal.open{ visibility:visible; opacity:1; }
   .modal-card{ background:#07121a; padding:18px; border-radius:12px; max-width:1000px; width:94%; border:1px solid rgba(255,255,255,0.03); box-shadow:0 30px 120px rgba(0,0,0,0.7); color:var(--muted); max-height:80vh; overflow:auto; }
   .modal-close{ float:right; background:transparent; border:1px solid rgba(255,255,255,0.03); padding:6px; border-radius:8px; color:var(--muted); cursor:pointer; }
 
-  /* calculators */
-  .calc-row{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  /* Calculators & export */
   .calc-box{ background:rgba(255,255,255,0.01); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); margin:10px 0; }
   .calc-box input[type="number"]{ padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:var(--text); width:110px; }
-
   .export-row{ display:flex; justify-content:center; margin-top:12px; }
   .export-btn{ background:var(--accent); border:none; color:#042; padding:10px 14px; border-radius:8px; font-weight:700; cursor:pointer; }
 
-  /* toggle */
+  /* Toggle */
   .toggle-container{ position:fixed; top:18px; right:18px; z-index:10000; }
   .toggle-btn{ background:var(--card); padding:8px 12px; border-radius:8px; color:var(--muted); border:1px solid rgba(255,255,255,0.02); cursor:pointer; }
 
-  /* subtle animations (mix of A and C) */
-  .fade-slide { opacity:0; transform: translateY(8px); animation: fadeSlideIn 0.6s ease forwards; }
+  /* Animations */
+  .fade-slide{ opacity:0; transform:translateY(8px); animation: fadeSlideIn 0.6s ease forwards; }
   @keyframes fadeSlideIn { to { opacity:1; transform:none; } }
 
-  /* responsive */
-  @media(max-width:980px){ .left{ flex-basis:100%; } .carousel-slide img{ width:260px; height:180px; } .canvas-wrap{ height:260px; } .chart-container canvas{ height:260px !important; } }
+  /* Responsive */
+  @media(max-width:980px){
+    .ss-left{ flex-basis:100%; }
+    .ss-right{ flex-basis:100%; max-width:100%; }
+    .carousel-slide img{ width:260px; height:180px; }
+    canvas{ height:260px !important; }
+  }
 
-  /* light mode overrides */
-  body.light-mode{ background: linear-gradient(180deg,#f7fbff 0%,#eaf8ff 100%); color:#042; }
-  body.light-mode .card{ background:#ffffff; color:#042; border:1px solid rgba(4,8,12,0.03); }
-  body.light-mode .tab{ color:#042; border:1px solid rgba(4,8,12,0.03); }
-  body.light-mode .tab.active{ color:#042; }
-  body.light-mode .modal-card{ background:#ffffff; color:#042; }
+  /* Light mode */
+  body.light-mode{ background:linear-gradient(180deg,#f7fbff 0%,#eaf8ff 100%); color:#042; }
+  body.light-mode .card{ background:#ffffff; color:#042; }
+  body.light-mode .analysis-panel{ background:#f6fbff; color:#042; border-left:4px solid var(--accent); }
+  body.light-mode .chart-card{ background:#f7fbff; color:#042; border:1px solid rgba(4,8,12,0.03); }
+
+  /* Force better rendering (Edge/GitHub Pages fix) */
+  .chart-card, .chart-wrap { min-height: 380px; }
   </style>
 </head>
 <body>
@@ -168,12 +126,10 @@
         </div>
 
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-          <!-- Toggle -->
           <div class="toggle-container">
             <button id="modeToggle" class="toggle-btn" aria-pressed="false">Toggle Light Mode</button>
           </div>
 
-          <!-- Tabs -->
           <div class="tabs" role="tablist" aria-label="Main navigation" style="margin-top:6px;">
             <div class="tab active" data-target="#methods">Methods</div>
             <div class="tab" data-target="#opinions">Opinions</div>
@@ -192,263 +148,278 @@
     <section id="methods" class="section card fade-slide">
       <h2>Methods — Full Study Overview (Expanded)</h2>
       <div style="color:var(--muted);line-height:1.6">
-        <h3>Purpose & Rationale</h3>
-        <p>
-          This study aimed to explore how a convenience sample of high-school-aged participants perceives animal cloning:
-          whether they support it, consider it humane, can visually classify cloned vs non-cloned animals, and whether they
-          would support extension of cloning research to humans. The educational aim was to teach practical survey design,
-          data cleaning, analysis, and reporting for an independent project.
-        </p>
+        <h3>Purpose & rationale</h3>
+        <p>This exploratory survey measured attitudes toward animal cloning, perceived humaneness, participants' visual identification ability for cloned vs normal animals, and opinion about expanding cloning research to humans. This project is intended for educational demonstration of survey collection, cleaning, and analysis.</p>
 
         <h3>Design</h3>
-        <p>
-          The study used a single-blind within-subjects image classification design. Each participant viewed the same set of four images
-          (pig, sheep, gaur/naur, dog) presented in randomized order and provided classifications for each image (“Normal” vs “Cloned”).
-          Prior to classification, participants answered two opinion questions and an item about human cloning expansion. Open-text fields
-          gathered qualitative opinions for thematic analysis.
-        </p>
+        <p>Within-subject classification task: participants saw 4 images in randomized order and labeled each as "Normal" or "Cloned". They also answered opinion questions.</p>
 
-        <h3>Participants & Recruitment</h3>
-        <p>
-          Convenience sample: N = 43 (high school students). Recruitment occurred through classroom announcements and teacher supervision.
-          Participation was voluntary, anonymous, and IRB approval was not sought because this was a classroom educational exercise; parental
-          consent was collected where necessary per school policy.
-        </p>
+        <h3>Participants & recruitment</h3>
+        <p>Convenience sample: N = 43 (high-school students). Recruited via classroom announcements and teacher supervision. Responses were anonymous and voluntary.</p>
 
         <h3>Materials</h3>
-        <p>
-          The stimuli were four images named <code>pig.jpg</code>, <code>sheep.jpg</code>, <code>naur.jpg</code>, and <code>dog.jpg</code>.
-          The pig and dog were naturally born (normal), while the sheep and gaur were cloned. Images were chosen to have similar framing,
-          resolution, and scale where possible. Surveys were administered digitally and saved as CSV exports for analysis.
-        </p>
+        <p>Place the 4 images in the same folder as this HTML file. Current paths used below (change if needed):</p>
+        <ul>
+          <li><code>/mnt/data/unnamed.jpg</code> (pig — Normal)</li>
+          <li><code>/mnt/data/unnamed (1).jpg</code> (sheep — Cloned)</li>
+          <li><code>/mnt/data/unnamed (2).jpg</code> (naur/gaur — Cloned)</li>
+          <li><code>/mnt/data/unnamed (3).jpg</code> (dog — Normal)</li>
+        </ul>
 
         <h3>Procedure</h3>
         <ol>
-          <li>Participants read a short description and consented (or had parental consent where required).</li>
-          <li>Participants answered demographic/background items (optional), then two opinion questions.</li>
-          <li>Participants viewed the four images in randomized order and labeled each as "Normal" or "Cloned".</li>
-          <li>Participants answered whether cloning research should be expanded to humans and could leave open text comments. Data were exported to CSV and cleaned.</li>
+          <li>Consent & short intro</li>
+          <li>Opinion questions (should animals be cloned? humane?)</li>
+          <li>Image classification (Normal vs Cloned)</li>
+          <li>Human cloning question & optional text responses</li>
         </ol>
 
-        <h3>Data cleaning & analysis plan</h3>
-        <p>
-          Responses were normalized (e.g., capitalization, synonyms) and aggregated. Analyses included:
-          descriptive percentages; chi-square goodness-of-fit to assess even distribution across categories; one-sample proportion z-tests (vs 50% null)
-          to evaluate labeling accuracy; two-proportion z-tests for comparisons (e.g., labeled Normal proportion for dog vs sheep); Cohen's h for effect sizes;
-          and qualitative thematic coding for open-text comments.
-        </p>
+        <h3>Data handling & analysis</h3>
+        <p>Data exported to CSV, cleaned (normalize variants), aggregated. Analyses include: proportions, one-sample proportion z-tests versus 50% baseline, two-proportion z-tests, chi-square goodness-of-fit, Cohen's h effect size, and 95% CIs (normal approximation). Qualitative comments were lightly corrected for grammar and displayed in the quotes carousel.</p>
 
-        <h3>Limitations & Reproducibility</h3>
-        <p>
-          Small sample and convenience sampling limit generalizability. Stimulus choice may bias responses (familiar breeds easier to recognize).
-          To reproduce, keep filenames exact and open this HTML file locally or host via GitHub Pages. All data and code can be exported via the buttons at the end of the page.
-        </p>
+        <h3>Limitations</h3>
+        <p>Small convenience sample and limited stimuli reduce generalizability. Image familiarity and framing may bias classification. Results are exploratory.</p>
       </div>
     </section>
 
     <!-- OPINIONS -->
     <section id="opinions" class="section card fade-slide">
       <h2>Opinion Questions</h2>
-      <div class="row">
-        <div class="canvas-wrap" style="min-width:340px;">
-          <h3 style="color:var(--accent)">Should animals be cloned?</h3>
-          <div class="chart-section">
-            <div class="chart-container">
-              <canvas id="shouldCloneChart" aria-label="Bar chart showing should animals be cloned"></canvas>
+
+      <div class="ss-row" style="margin-bottom:18px;">
+        <div class="ss-left">
+          <div class="chart-card">
+            <div class="chart-title">Should animals be cloned?</div>
+            <div class="chart-wrap">
+              <canvas id="shouldCloneChart" aria-label="chart"></canvas>
             </div>
-            <div class="analysis-box" id="shouldCloneAnalysis"></div>
-          </div>
-          <div style="text-align:center;margin-top:10px;">
-            <button class="export-btn" onclick="openModal('shouldCloneStats')">Detailed stats & tests</button>
           </div>
         </div>
 
-        <div class="canvas-wrap" style="min-width:340px;">
-          <h3 style="color:var(--accent)">Is cloning animals humane?</h3>
-          <div class="chart-section">
-            <div class="chart-container">
-              <canvas id="humaneChart" aria-label="Pie chart showing is cloning humane"></canvas>
+        <div class="ss-right">
+          <div class="analysis-panel">
+            <h4>Quick interpretation</h4>
+            <p id="shouldCloneText">Loading...</p>
+            <div style="margin-top:10px;text-align:right;">
+              <button class="export-btn" onclick="openModal('shouldCloneStats')">Detailed stats</button>
             </div>
-            <div class="analysis-box" id="humaneAnalysis"></div>
           </div>
-          <div style="text-align:center;margin-top:10px;">
-            <button class="export-btn" onclick="openModal('humaneStats')">Detailed stats & tests</button>
+        </div>
+      </div>
+
+      <div class="ss-row">
+        <div class="ss-left">
+          <div class="chart-card">
+            <div class="chart-title">Is cloning animals humane?</div>
+            <div class="chart-wrap">
+              <canvas id="humaneChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="ss-right">
+          <div class="analysis-panel">
+            <h4>Quick interpretation</h4>
+            <p id="humaneText">Loading...</p>
+            <div style="margin-top:10px;text-align:right;">
+              <button class="export-btn" onclick="openModal('humaneStats')">Detailed stats</button>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ANIMALS -->
+    <!-- ANIMALS (side-by-side each) -->
     <section id="animals" class="section card fade-slide">
-      <h2>Animal Classification (Per-Animal)</h2>
+      <h2>Individual Animal Classification</h2>
 
-      <!-- PIG -->
-      <div class="card" style="margin-bottom:18px;">
-        <div class="row">
-          <div class="left"><img src="pig.jpg" alt="Pig image (Normal)"></div>
-          <div class="right">
-            <h3>Pig — actual: <span style="color:var(--accent2)">NORMAL</span></h3>
-            <div class="chart-section">
-              <div class="chart-container">
-                <canvas id="pigChart" aria-label="Pie chart pig classification"></canvas>
-              </div>
-              <div class="analysis-box" id="pigAnalysis"></div>
+      <!-- Pig -->
+      <div style="margin-bottom:18px;">
+        <div class="ss-row">
+          <div class="ss-left">
+            <div class="chart-card">
+              <div class="chart-title">Pig — actual: NORMAL</div>
+              <div class="chart-wrap"><canvas id="pigChart"></canvas></div>
             </div>
-            <div style="text-align:center;margin-top:10px;">
-              <button class="export-btn" onclick="openModal('pigStats')">Open pig stats</button>
+          </div>
+
+          <div class="ss-right">
+            <img class="img-thumb" src="/mnt/data/unnamed.jpg" alt="Pig (Normal)">
+            <div style="height:8px"></div>
+            <div class="analysis-panel">
+              <h4>Pig analysis</h4>
+              <p id="pigText">Loading...</p>
+              <div style="margin-top:8px;text-align:right;"><button class="export-btn" onclick="openModal('pigStats')">Open stats</button></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- SHEEP -->
-      <div class="card" style="margin-bottom:18px;">
-        <div class="row">
-          <div class="left"><img src="sheep.jpg" alt="Sheep image (Cloned)"></div>
-          <div class="right">
-            <h3>Sheep — actual: <span style="color:var(--warn)">CLONED</span></h3>
-            <div class="chart-section">
-              <div class="chart-container">
-                <canvas id="sheepChart" aria-label="Pie chart sheep classification"></canvas>
-              </div>
-              <div class="analysis-box" id="sheepAnalysis"></div>
+      <!-- Sheep -->
+      <div style="margin-bottom:18px;">
+        <div class="ss-row">
+          <div class="ss-left">
+            <div class="chart-card">
+              <div class="chart-title">Sheep — actual: CLONED</div>
+              <div class="chart-wrap"><canvas id="sheepChart"></canvas></div>
             </div>
-            <div style="text-align:center;margin-top:10px;">
-              <button class="export-btn" onclick="openModal('sheepStats')">Open sheep stats</button>
+          </div>
+
+          <div class="ss-right">
+            <img class="img-thumb" src="/mnt/data/unnamed (1).jpg" alt="Sheep (Cloned)">
+            <div style="height:8px"></div>
+            <div class="analysis-panel">
+              <h4>Sheep analysis</h4>
+              <p id="sheepText">Loading...</p>
+              <div style="margin-top:8px;text-align:right;"><button class="export-btn" onclick="openModal('sheepStats')">Open stats</button></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- GAUR -->
-      <div class="card" style="margin-bottom:18px;">
-        <div class="row">
-          <div class="left"><img src="naur.jpg" alt="Gaur/Naur image (Cloned)"></div>
-          <div class="right">
-            <h3>Gaur (Naur) — actual: <span style="color:var(--warn)">CLONED</span></h3>
-            <div class="chart-section">
-              <div class="chart-container">
-                <canvas id="gaurChart" aria-label="Pie chart gaur classification"></canvas>
-              </div>
-              <div class="analysis-box" id="gaurAnalysis"></div>
+      <!-- Gaur -->
+      <div style="margin-bottom:18px;">
+        <div class="ss-row">
+          <div class="ss-left">
+            <div class="chart-card">
+              <div class="chart-title">Gaur (Naur) — actual: CLONED</div>
+              <div class="chart-wrap"><canvas id="gaurChart"></canvas></div>
             </div>
-            <div style="text-align:center;margin-top:10px;">
-              <button class="export-btn" onclick="openModal('gaurStats')">Open gaur stats</button>
+          </div>
+
+          <div class="ss-right">
+            <img class="img-thumb" src="/mnt/data/unnamed (2).jpg" alt="Gaur (Cloned)">
+            <div style="height:8px"></div>
+            <div class="analysis-panel">
+              <h4>Gaur analysis</h4>
+              <p id="gaurText">Loading...</p>
+              <div style="margin-top:8px;text-align:right;"><button class="export-btn" onclick="openModal('gaurStats')">Open stats</button></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- DOG -->
-      <div class="card" style="margin-bottom:18px;">
-        <div class="row">
-          <div class="left"><img src="dog.jpg" alt="Dog image (Normal)"></div>
-          <div class="right">
-            <h3>Dog — actual: <span style="color:var(--accent2)">NORMAL</span></h3>
-            <div class="chart-section">
-              <div class="chart-container">
-                <canvas id="dogChart" aria-label="Pie chart dog classification"></canvas>
-              </div>
-              <div class="analysis-box" id="dogAnalysis"></div>
+      <!-- Dog -->
+      <div style="margin-bottom:18px;">
+        <div class="ss-row">
+          <div class="ss-left">
+            <div class="chart-card">
+              <div class="chart-title">Dog — actual: NORMAL</div>
+              <div class="chart-wrap"><canvas id="dogChart"></canvas></div>
             </div>
-            <div style="text-align:center;margin-top:10px;">
-              <button class="export-btn" onclick="openModal('dogStats')">Open dog stats</button>
+          </div>
+
+          <div class="ss-right">
+            <img class="img-thumb" src="/mnt/data/unnamed (3).jpg" alt="Dog (Normal)">
+            <div style="height:8px"></div>
+            <div class="analysis-panel">
+              <h4>Dog analysis</h4>
+              <p id="dogText">Loading...</p>
+              <div style="margin-top:8px;text-align:right;"><button class="export-btn" onclick="openModal('dogStats')">Open stats</button></div>
             </div>
           </div>
         </div>
       </div>
-
     </section>
 
-    <!-- COMBINED -->
+    <!-- Combined -->
     <section id="combined" class="section card fade-slide">
       <h2>Combined Results & Image Carousel</h2>
 
       <div class="carousel" id="animalCarousel" aria-roledescription="carousel">
         <div class="carousel-track" id="carouselTrack" style="transform:translateX(0%)">
-          <div class="carousel-slide"><img src="pig.jpg" alt="Pig"></div>
-          <div class="carousel-slide"><img src="sheep.jpg" alt="Sheep"></div>
-          <div class="carousel-slide"><img src="naur.jpg" alt="Naur"></div>
-          <div class="carousel-slide"><img src="dog.jpg" alt="Dog"></div>
+          <div class="carousel-slide"><img src="/mnt/data/unnamed.jpg" alt="Pig"></div>
+          <div class="carousel-slide"><img src="/mnt/data/unnamed (1).jpg" alt="Sheep"></div>
+          <div class="carousel-slide"><img src="/mnt/data/unnamed (2).jpg" alt="Naur"></div>
+          <div class="carousel-slide"><img src="/mnt/data/unnamed (3).jpg" alt="Dog"></div>
         </div>
       </div>
-      <div class="controls" style="margin-top:10px;"><button class="export-btn" id="prevSlide">◀ Prev</button><button class="export-btn" id="nextSlide">Next ▶</button></div>
 
-      <h3 style="color:var(--accent)">All Animals Combined: Normal vs Cloned</h3>
-      <div class="chart-section">
-        <div class="chart-container">
-          <canvas id="combinedChart" aria-label="Pie chart combined normal vs cloned"></canvas>
-        </div>
-        <div class="analysis-box" id="combinedAnalysis"></div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
+        <button id="prevSlide" class="export-btn">◀ Prev</button>
+        <button id="nextSlide" class="export-btn">Next ▶</button>
       </div>
-      <div style="text-align:center;margin-top:10px;"><button class="export-btn" onclick="openModal('combinedStats')">Open combined stats</button></div>
+
+      <div style="height:14px"></div>
+
+      <div class="ss-row">
+        <div class="ss-left">
+          <div class="chart-card">
+            <div class="chart-title">All Animals Combined: Normal vs Cloned</div>
+            <div class="chart-wrap"><canvas id="combinedChart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="ss-right">
+          <div class="analysis-panel">
+            <h4>Combined analysis</h4>
+            <p id="combinedText">Loading...</p>
+            <div style="margin-top:8px;text-align:right;"><button class="export-btn" onclick="openModal('combinedStats')">Open stats</button></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- HUMANS -->
+    <!-- Human -->
     <section id="humans" class="section card fade-slide">
       <h2>Human Cloning Question</h2>
-      <div class="chart-section">
-        <div class="chart-container">
-          <canvas id="humanChart" aria-label="Pie chart human cloning question"></canvas>
+
+      <div class="ss-row">
+        <div class="ss-left">
+          <div class="chart-card">
+            <div class="chart-title">Should cloning research expand to humans?</div>
+            <div class="chart-wrap"><canvas id="humanChart"></canvas></div>
+          </div>
         </div>
-        <div class="analysis-box" id="humanAnalysis"></div>
+
+        <div class="ss-right">
+          <div class="analysis-panel">
+            <h4>Interpretation</h4>
+            <p id="humanText">Loading...</p>
+            <div style="margin-top:8px;text-align:right;"><button class="export-btn" onclick="openModal('humanStats')">Open stats</button></div>
+          </div>
+        </div>
       </div>
-      <div style="text-align:center;margin-top:10px;"><button class="export-btn" onclick="openModal('humanStats')">Open human cloning stats</button></div>
     </section>
 
-    <!-- ANALYSIS (big section) -->
+    <!-- Analysis -->
     <section id="analysis" class="section card fade-slide">
-      <h2>Full Analysis, Statistical Tests & Interpretation</h2>
+      <h2>Full Analysis & Recommendations</h2>
       <div style="color:var(--muted);line-height:1.6">
-        <h3>Overview of analytical steps</h3>
-        <p>
-          We conducted the following analyses:
-        </p>
+        <h3>Summary</h3>
+        <p id="summaryText">Loading full summary...</p>
+
+        <h3>Detailed statistical outputs (all tests)</h3>
+        <pre id="analysisDetails" style="color:var(--muted); font-size:13px; white-space:pre-wrap;"></pre>
+
+        <h3>Recommendations</h3>
         <ol>
-          <li>Descriptive statistics (counts, percentages) for each question.</li>
-          <li>Chi-square goodness-of-fit tests to assess whether responses differ from equal distribution.</li>
-          <li>One-sample proportion z-tests (vs 50%) for binary classifications (e.g., labeling an animal Normal vs Cloned).</li>
-          <li>Two-proportion z-tests for pairwise comparisons (e.g., pig vs sheep correct normal labeling proportion).</li>
-          <li>Effect size estimation (Cohen's h) where appropriate.</li>
-          <li>Qualitative thematic coding of open-text responses (presented in the quotes section).</li>
+          <li>Increase sample size and diversify participants.</li>
+          <li>Include more images and vary breeds to reduce image-specific cues.</li>
+          <li>Collect demographic metadata to analyze moderators.</li>
         </ol>
-
-        <h3>Detailed statistical outputs</h3>
-
-        <p id="analysisDetails" style="white-space:pre-wrap; font-family:monospace; font-size:13px;"></p>
-
-        <h3>Interpretation & recommendations</h3>
-        <p>
-          Key points:
-        </p>
-        <ul>
-          <li>Participants show conditional support for animal cloning (a plurality of Yes but many Maybe responses), indicating opinions are context-dependent.</li>
-          <li>Certain species (dog, pig) were more reliably identified as normal — likely due to familiarity or clear breed cues.</li>
-          <li>Sheep and gaur were more often labeled as cloned, indicating either image cues or cultural knowledge (famous cloned sheep) influenced responses.</li>
-          <li>The group overall leaned against expanding cloning to humans — a policy-sensitive finding that warrants cautious interpretation.</li>
-        </ul>
       </div>
     </section>
 
-    <!-- QUOTES (placed BELOW analysis as requested) -->
+    <!-- Quotes -->
     <section id="quotes" class="section card fade-slide">
-      <h2>Participant Quotes (Rotating Carousel)</h2>
+      <h2>Participant Quotes (full text - grammar lightly corrected)</h2>
       <div class="quote-card">
         <div id="quoteTrack" class="quote-track" style="transform:translateX(0%)"></div>
       </div>
-      <div class="controls" style="margin-top:12px;">
-        <button class="export-btn" id="prevQuote">❮</button>
-        <button class="export-btn" id="nextQuote">❯</button>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
+        <button id="prevQuote" class="export-btn">❮</button>
+        <button id="nextQuote" class="export-btn">❯</button>
       </div>
     </section>
 
-    <!-- CALCULATORS -->
+    <!-- Calculators -->
     <section id="calculators" class="section card fade-slide">
-      <h2>Statistical Calculators (Interactive)</h2>
+      <h2>Statistical Calculators</h2>
 
       <div class="calc-box">
-        <h3>2×2 Chi-square</h3>
-        <div class="calc-row">
+        <h4>2×2 chi-square quick</h4>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <label>a <input id="chi_a" type="number" value="10"></label>
           <label>b <input id="chi_b" type="number" value="20"></label>
           <label>c <input id="chi_c" type="number" value="30"></label>
@@ -461,37 +432,31 @@
       </div>
 
       <div class="calc-box">
-        <h3>One-sample proportion z-test</h3>
-        <div class="calc-row">
-          <label>Successes <input id="pz_success" type="number" value="26"></label>
+        <h4>One-sample proportion</h4>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <label>success <input id="pz_success" type="number" value="26"></label>
           <label>n <input id="pz_n" type="number" value="43"></label>
           <label>p0 <input id="pz_p0" type="number" step="0.01" value="0.5"></label>
         </div>
-        <div style="margin-top:8px;">
-          <button class="export-btn" onclick="computePropZ()">Compute z</button>
-          <div id="pz_out" style="margin-top:8px;color:var(--muted)"></div>
-        </div>
+        <div style="margin-top:8px;"><button class="export-btn" onclick="computePropZ()">Compute z</button><div id="pz_out" style="margin-top:8px;color:var(--muted)"></div></div>
       </div>
 
       <div class="calc-box">
-        <h3>Two-proportion z-test</h3>
-        <div class="calc-row">
+        <h4>Two-proportion</h4>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <label>s1 <input id="tp_s1" type="number" value="26"></label>
           <label>n1 <input id="tp_n1" type="number" value="43"></label>
           <label>s2 <input id="tp_s2" type="number" value="17"></label>
           <label>n2 <input id="tp_n2" type="number" value="43"></label>
         </div>
-        <div style="margin-top:8px;">
-          <button class="export-btn" onclick="computeTwoProp()">Compute two-prop z</button>
-          <div id="tp_out" style="margin-top:8px;color:var(--muted)"></div>
-        </div>
+        <div style="margin-top:8px;"><button class="export-btn" onclick="computeTwoProp()">Compute two-prop</button><div id="tp_out" style="margin-top:8px;color:var(--muted)"></div></div>
       </div>
     </section>
 
-    <!-- EXPORT / FOOTER -->
+    <!-- Export -->
     <section class="section card fade-slide">
       <div style="display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;">
-        <button class="export-btn" onclick="exportCSV()">Export aggregated counts (CSV)</button>
+        <button class="export-btn" onclick="exportCSV()">Export CSV</button>
         <button class="export-btn" onclick="downloadAnalysis()">Download analysis (TXT)</button>
       </div>
     </section>
@@ -499,267 +464,204 @@
     <footer style="text-align:center;margin-top:18px;color:var(--muted)">© 2025 Cloning Survey Research Project™ — Created by <strong>Arya Ravikumar</strong></footer>
   </div>
 
-  <!-- modal -->
+  <!-- Modal -->
   <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Statistics">
-      <button class="modal-close" onclick="closeModal()" aria-label="Close modal">Close</button>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Statistics modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">Close</button>
       <div id="modalContent" style="color:var(--muted);line-height:1.4"></div>
     </div>
   </div>
 
-  <!-- SCRIPT: data, charts, calculations, UI wiring -->
   <script>
-  /* =========================================
-     MASTER JS
-     - Data object
-     - Chart creation (Chart.js)
-     - Statistical functions (prop z, two prop, chi2)
-     - UI wiring: modals, tabs, carousels, toggle
-     - Export and download functions
-     ========================================= */
-
-  // ------------------------
-  // Data (confirmed by you)
-  // ------------------------
+  /* -------------------------
+     DATA (latest update provided)
+     ------------------------- */
   const DATA = {
-    shouldClone: { Yes: 15, No: 8, Maybe: 12, Unopposed: 8 },
-    humane: { Yes: 27, No: 16 },
-    pig: { Normal: 26, Cloned: 17 },
-    sheep: { Normal: 10, Cloned: 33 },
-    gaur: { Normal: 15, Cloned: 28 },
-    dog: { Normal: 38, Cloned: 5 },
-    human: { Yes: 17, No: 26 }
+    shouldClone: { Yes:15, No:8, Maybe:12, Unopposed:8 },
+    humane: { Yes:27, No:16 },
+    pig: { Normal:26, Cloned:17 },
+    sheep: { Normal:10, Cloned:33 },
+    gaur: { Normal:15, Cloned:28 },
+    dog: { Normal:38, Cloned:5 },
+    human: { Yes:17, No:26 }
   };
-  DATA.combined = { Normal: DATA.pig.Normal + DATA.sheep.Normal + DATA.gaur.Normal + DATA.dog.Normal, Cloned: DATA.pig.Cloned + DATA.sheep.Cloned + DATA.gaur.Cloned + DATA.dog.Cloned };
+  DATA.combined = {
+    Normal: DATA.pig.Normal + DATA.sheep.Normal + DATA.gaur.Normal + DATA.dog.Normal,
+    Cloned: DATA.pig.Cloned + DATA.sheep.Cloned + DATA.gaur.Cloned + DATA.dog.Cloned
+  };
 
-  // ------------------------
-  // Helpers
-  // ------------------------
+  /* -------------------------
+     Helpers
+     ------------------------- */
   function sum(obj){ return Object.values(obj).reduce((a,b)=>a+b,0); }
-  function percent(obj){ const t=sum(obj)||1; return Object.fromEntries(Object.entries(obj).map(([k,v])=>[k,((v/t)*100).toFixed(1)])); }
+  function percent(obj){ const t = sum(obj)||1; return Object.fromEntries(Object.entries(obj).map(([k,v])=>[k,((v/t)*100).toFixed(1)])); }
   function fmt(n,d=3){ return Number(n).toFixed(d); }
 
-  // Numerical functions: erf / normal CDF
+  // erf / normalCdf
   function erf(x){
-    const sign = x >= 0 ? 1 : -1;
-    x = Math.abs(x);
-    const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741, a4 = -1.453152027, a5 = 1.061405429;
-    const p = 0.3275911;
-    const t = 1/(1 + p*x);
-    const y = 1 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+    const sign = x>=0?1:-1; x=Math.abs(x);
+    const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429; const p=0.3275911;
+    const t=1/(1+p*x); const y=1 - (((((a5*t + a4)*t)+a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
     return sign*y;
   }
-  function normalCdf(z){ return (1 + erf(z/Math.sqrt(2)))/2; }
+  function normalCdf(z){ return (1 + erf(z/Math.sqrt(2))) / 2; }
 
-  // ------------------------
-  // Tests: one-sample prop z-test
-  // ------------------------
+  // proportion z-test
   function propZTest(successes, n, p0=0.5){
-    const p = successes / n;
-    const se = Math.sqrt(p0*(1-p0)/n);
-    const z = (p - p0) / se;
-    const pval = 2 * (1 - normalCdf(Math.abs(z)));
-    const seP = Math.sqrt(p*(1-p)/n);
-    const ciLow = Math.max(0, p - 1.96*seP), ciHigh = Math.min(1, p + 1.96*seP);
-    return { z, pval, p, ci:[ciLow, ciHigh] };
+    const p = successes / n; const se = Math.sqrt(p0*(1-p0)/n);
+    const z = (p - p0)/se; const pval = 2*(1 - normalCdf(Math.abs(z)));
+    const seP = Math.sqrt(p*(1-p)/n); const ciLow = Math.max(0, p - 1.96*seP); const ciHigh = Math.min(1, p + 1.96*seP);
+    return { z, pval, p, ci:[ciLow,ciHigh] };
   }
 
-  // ------------------------
-  // Tests: two-proportion z-test
-  // ------------------------
+  // two-prop z-test
   function twoPropZ(s1,n1,s2,n2){
-    const p1 = s1/n1, p2 = s2/n2;
-    const pPool = (s1 + s2) / (n1 + n2);
-    const se = Math.sqrt(pPool*(1-pPool)*(1/n1 + 1/n2));
-    const z = (p1 - p2) / se;
-    const pval = 2*(1 - normalCdf(Math.abs(z)));
-    const seDiff = Math.sqrt(p1*(1-p1)/n1 + p2*(1-p2)/n2);
-    const diff = p1 - p2;
-    const h = 2*Math.asin(Math.sqrt(p1)) - 2*Math.asin(Math.sqrt(p2)); // Cohen's h
+    const p1 = s1/n1, p2 = s2/n2; const pPool = (s1+s2)/(n1+n2);
+    const se = Math.sqrt(pPool*(1-pPool)*(1/n1 + 1/n2)); const z = (p1 - p2)/se; const pval = 2*(1 - normalCdf(Math.abs(z)));
+    const seDiff = Math.sqrt(p1*(1-p1)/n1 + p2*(1-p2)/n2); const diff = p1 - p2;
+    const h = 2*Math.asin(Math.sqrt(p1)) - 2*Math.asin(Math.sqrt(p2));
     const ciLow = diff - 1.96*seDiff, ciHigh = diff + 1.96*seDiff;
     return { z, pval, p1, p2, diff, ci:[ciLow,ciHigh], h };
   }
 
-  // ------------------------
-  // Chi-square goodness-of-fit
-  // ------------------------
+  // chi-square goodness-of-fit
   function chiSquare(observed){
-    const total = observed.reduce((a,b)=>a+b,0);
-    const expected = observed.map(()=> total/observed.length);
-    let chi = 0;
-    for(let i=0;i<observed.length;i++){
-      chi += (observed[i]-expected[i])**2 / (expected[i]||1e-9);
-    }
-    return chi;
+    const total = observed.reduce((a,b)=>a+b,0); const expected = observed.map(()=>total/observed.length);
+    let chi=0; for(let i=0;i<observed.length;i++){ chi += (observed[i]-expected[i])**2 / (expected[i]||1e-9); } return chi;
   }
-  function chi2pApprox(chi2, df=1){
-    // approximate p using incomplete gamma / erf shortcut (for demonstration only)
-    // For df=1, p approx = 1 - erf(sqrt(chi2/2))
-    const x = Math.sqrt(chi2/2);
-    const p = 1 - erf(x);
-    return Math.max(0, Math.min(1, p));
+  function chi2pApprox(chi2){
+    // approximate tail via erf transform (rough)
+    const x = Math.sqrt(Math.max(0,chi2)/2); const p = 1 - erf(x); return Math.max(0, Math.min(1, p));
   }
 
-  // ------------------------
-  // Chart creation helper
-  // ------------------------
-  function makeChart(id, type, labels, data, options = {}){
+  // Chart helper
+  const palette = ['#53a7ff','#ff5894','#6aff8f','#ffe66a','#c486ff','#ffb85c'];
+  function makeChart(id, type, labels, data, options={}){
     const el = document.getElementById(id);
-    if(!el){ console.warn('Missing canvas', id); return null; }
+    if(!el) return null;
     return new Chart(el, {
       type,
-      data:{
-        labels,
-        datasets:[{
-          label: '',
-          data,
-          backgroundColor: ['#00d0ff','#7affb2','#ff7ab6','#f97316'],
-          borderRadius: 8
-        }]
-      },
+      data:{ labels, datasets:[{ label:'', data, backgroundColor: palette.slice(0, labels.length), borderRadius:8 }] },
       options: Object.assign({
         responsive:true,
-        plugins:{
-          tooltip:{ callbacks: { label: ctx => {
-            const val = ctx.raw;
-            const tot = data.reduce((a,b)=>a+b,0);
-            const pct = tot ? ((val/tot)*100).toFixed(1) : '0.0';
-            return `${ctx.label}: ${val} (${pct}%)`;
-          }}},
-          legend:{ display:true, labels:{ color:'#cfeaf9' } }
-        },
+        plugins:{ tooltip:{ callbacks:{ label: ctx => {
+          const val = ctx.raw; const tot = data.reduce((a,b)=>a+b,0); const pct = tot ? ((val/tot)*100).toFixed(1) : '0.0';
+          return `${ctx.label}: ${val} (${pct}%)`; } } }, legend:{ labels:{ color:'#cfeaf9' } } },
         scales:{ y:{ beginAtZero:true, ticks:{ color:'#cfeaf9' } }, x:{ ticks:{ color:'#cfeaf9' } } }
       }, options)
     });
   }
 
-  // ------------------------
-  // Initialization on DOMContentLoaded
-  // ------------------------
-  document.addEventListener('DOMContentLoaded', () => {
-    try {
-      // Chart creation
+  /* -------------------------
+     Initialize charts after load (fixes Edge/GitHub pages layout race)
+     ------------------------- */
+  window.addEventListener('load', () => {
+    try{
+      // opinion charts
       makeChart('shouldCloneChart','bar', Object.keys(DATA.shouldClone), Object.values(DATA.shouldClone), { scales:{ y:{ beginAtZero:true } }});
       makeChart('humaneChart','pie', Object.keys(DATA.humane), Object.values(DATA.humane));
+
+      // per-animal
       makeChart('pigChart','pie',['Normal','Cloned'], [DATA.pig.Normal, DATA.pig.Cloned]);
       makeChart('sheepChart','pie',['Normal','Cloned'], [DATA.sheep.Normal, DATA.sheep.Cloned]);
       makeChart('gaurChart','pie',['Normal','Cloned'], [DATA.gaur.Normal, DATA.gaur.Cloned]);
       makeChart('dogChart','pie',['Normal','Cloned'], [DATA.dog.Normal, DATA.dog.Cloned]);
+
+      // combined & human
       makeChart('combinedChart','pie',['Normal','Cloned'], [DATA.combined.Normal, DATA.combined.Cloned]);
       makeChart('humanChart','pie',['Yes','No'], [DATA.human.Yes, DATA.human.No]);
 
-      // populate short textual analysis
-      populateShortSummaries();
+      // populate text and analysis
+      populateSummaries();
+      renderAnalysisDetails();
 
-      // build carousels and wire UI
-      buildQuoteCarousel();
-      wireQuoteButtons();
-      buildAnimalCarousel();
-      wireTabs();
-      wireModalClose();
+      // UI wiring
+      buildQuotes(); wireQuoteButtons(); buildAnimalCarousel(); wireTabs(); wireModalClose();
 
-      // toggle
+      // toggle button
       document.getElementById('modeToggle').addEventListener('click', toggleMode);
 
-      // compute and display analysis details (big block below)
-      renderFullAnalysisBlock();
-
-      console.log('Master page initialized. If charts not visible check console and verify image files exist in same folder as HTML.');
-    } catch(e){
-      console.error('Error during initialization', e);
+      console.log('Charts initialized after load.');
+    } catch(e) {
+      console.error('Chart init error', e);
     }
   });
 
-  // ------------------------
-  // populate short textual summaries in boxes
-  // ------------------------
-  function populateShortSummaries(){
-    document.getElementById('shouldCloneAnalysis').innerText =
-      `Counts — Yes: ${DATA.shouldClone.Yes}, Maybe: ${DATA.shouldClone.Maybe}, No: ${DATA.shouldClone.No}, Unopposed: ${DATA.shouldClone.Unopposed}. Percentages: ${Object.entries(percent(DATA.shouldClone)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+  /* -------------------------
+     Populate summary texts
+     ------------------------- */
+  function populateSummaries(){
+    document.getElementById('shouldCloneText').innerText =
+      `Counts — Yes: ${DATA.shouldClone.Yes}, Maybe: ${DATA.shouldClone.Maybe}, No: ${DATA.shouldClone.No}, Unopposed: ${DATA.shouldClone.Unopposed}. Percents: ${Object.entries(percent(DATA.shouldClone)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
 
-    document.getElementById('humaneAnalysis').innerText =
-      `Counts — Yes: ${DATA.humane.Yes}, No: ${DATA.humane.No}. Percentages: ${Object.entries(percent(DATA.humane)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+    document.getElementById('humaneText').innerText =
+      `Counts — Yes: ${DATA.humane.Yes}, No: ${DATA.humane.No}. Percents: ${Object.entries(percent(DATA.humane)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
 
-    document.getElementById('pigAnalysis').innerText =
-      `Counts — Normal: ${DATA.pig.Normal}, Cloned: ${DATA.pig.Cloned}. Percents: ${Object.entries(percent(DATA.pig)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+    document.getElementById('pigText').innerText =
+      `Counts — Normal: ${DATA.pig.Normal}, Cloned: ${DATA.pig.Cloned}. Percents: ${Object.entries(percent(DATA.pig)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
 
-    document.getElementById('sheepAnalysis').innerText =
-      `Counts — Normal: ${DATA.sheep.Normal}, Cloned: ${DATA.sheep.Cloned}. Percents: ${Object.entries(percent(DATA.sheep)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+    document.getElementById('sheepText').innerText =
+      `Counts — Normal: ${DATA.sheep.Normal}, Cloned: ${DATA.sheep.Cloned}. Percents: ${Object.entries(percent(DATA.sheep)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
 
-    document.getElementById('gaurAnalysis').innerText =
-      `Counts — Normal: ${DATA.gaur.Normal}, Cloned: ${DATA.gaur.Cloned}. Percents: ${Object.entries(percent(DATA.gaur)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+    document.getElementById('gaurText').innerText =
+      `Counts — Normal: ${DATA.gaur.Normal}, Cloned: ${DATA.gaur.Cloned}. Percents: ${Object.entries(percent(DATA.gaur)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
 
-    document.getElementById('dogAnalysis').innerText =
-      `Counts — Normal: ${DATA.dog.Normal}, Cloned: ${DATA.dog.Cloned}. Percents: ${Object.entries(percent(DATA.dog)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+    document.getElementById('dogText').innerText =
+      `Counts — Normal: ${DATA.dog.Normal}, Cloned: ${DATA.dog.Cloned}. Percents: ${Object.entries(percent(DATA.dog)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
 
-    document.getElementById('combinedAnalysis').innerText =
-      `Combined totals — Normal: ${DATA.combined.Normal}, Cloned: ${DATA.combined.Cloned}. Percents: ${Object.entries(percent(DATA.combined)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+    document.getElementById('combinedText').innerText =
+      `Combined totals — Normal: ${DATA.combined.Normal}, Cloned: ${DATA.combined.Cloned}. Percents: ${Object.entries(percent(DATA.combined)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
 
-    document.getElementById('humanAnalysis').innerText =
-      `Counts — Yes: ${DATA.human.Yes}, No: ${DATA.human.No}. Percentages: ${Object.entries(percent(DATA.human)).map(([k,v])=>`${k}:${v}%`).join(', ')}.`;
+    document.getElementById('humanText').innerText =
+      `Counts — Yes: ${DATA.human.Yes}, No: ${DATA.human.No}. Percents: ${Object.entries(percent(DATA.human)).map(([k,v])=>`${k}:${v}%`).join(', ')}`;
+
+    document.getElementById('summaryText').innerText =
+      `N = ${sum(DATA.shouldClone)} participants. Findings: conditional support for animal cloning (plurality Yes but many Maybe), strong cloned attribution for sheep & gaur, high correct normal labeling for dog & pig, and majority opposing expansion to humans. See detailed stats below.`;
   }
 
-  // ------------------------
-  // Build full analysis long block (text + tests)
-  // ------------------------
-  function renderFullAnalysisBlock(){
-    // We'll compute multiple tests and then place them in the analysisDetails element
-    let details = '';
+  /* -------------------------
+     Detailed analysis rendering
+     ------------------------- */
+  function renderAnalysisDetails(){
+    let out = '';
+    // shouldClone
+    const obsClone = Object.values(DATA.shouldClone); const nClone = sum(DATA.shouldClone);
+    const chiClone = chiSquare(obsClone); const pChiClone = chi2pApprox(chiClone);
+    out += `Should animals be cloned?\\nCounts: ${Object.entries(DATA.shouldClone).map(([k,v])=>`${k}:${v}`).join(', ')} (N=${nClone})\\n`;
+    out += `Chi-square (gof) = ${fmt(chiClone,4)} ; approx p ≈ ${pChiClone.toFixed(6)}\\n\\n`;
 
-    // 1) Should animals be cloned? (chi-square goodness-of-fit)
-    const obsClone = Object.values(DATA.shouldClone);
-    const nClone = sum(DATA.shouldClone);
-    const chiClone = chiSquare(obsClone);
-    const pChiClone = chi2pApprox(chiClone, obsClone.length - 1);
-    details += '--- Should animals be cloned? (Counts & goodness-of-fit) ---\\n';
-    details += `Counts: ${Object.entries(DATA.shouldClone).map(([k,v])=>`${k}:${v}`).join(', ')} (N=${nClone})\\n`;
-    details += `Chi-square (gof) = ${fmt(chiClone,3)} ; approx p = ${pChiClone.toFixed(4)} (df=${obsClone.length-1})\\n`;
-    details += `Percentages: ${Object.entries(percent(DATA.shouldClone)).map(([k,v])=>`${k}:${v}%`).join(', ')}\\n\\n`;
+    // humane
+    const nHum = sum(DATA.humane), resHum = propZTest(DATA.humane.Yes, nHum);
+    out += `Is cloning animals humane?\\nCounts: Yes:${DATA.humane.Yes}, No:${DATA.humane.No} (N=${nHum})\\n`;
+    out += `One-sample prop test (Yes vs 0.5): observed p=${(resHum.p*100).toFixed(1)}% ; z=${fmt(resHum.z,3)} ; p=${fmt(resHum.pval,6)} ; 95% CI: [${(resHum.ci[0]*100).toFixed(1)}%, ${(resHum.ci[1]*100).toFixed(1)}%]\\n\\n`;
 
-    // 2) Is cloning humane? (one-sample prop z test for Yes)
-    const nHum = sum(DATA.humane);
-    const resHum = propZTest(DATA.humane.Yes, nHum, 0.5);
-    details += '--- Is cloning animals humane? (One-sample proportion test vs 50%) ---\\n';
-    details += `Counts: Yes:${DATA.humane.Yes}, No:${DATA.humane.No} (N=${nHum})\\n`;
-    details += `Observed proportion Yes = ${(resHum.p*100).toFixed(1)}% ; z = ${fmt(resHum.z,3)} ; p = ${fmt(resHum.pval,4)}\\n`;
-    details += `95% CI for Yes proportion: [${(resHum.ci[0]*100).toFixed(1)}%, ${(resHum.ci[1]*100).toFixed(1)}%]\\n\\n`;
-
-    // 3) Per-animal classification tests
-    const animals = ['pig','sheep','gaur','dog'];
-    animals.forEach(a=>{
-      const counts = DATA[a];
-      const n = sum(counts);
-      // test for proportion (e.g., Normal vs 50% if Normal is majority)
-      const majorityKey = counts.Normal >= counts.Cloned ? 'Normal':'Cloned';
-      const succ = majorityKey === 'Normal' ? counts.Normal : counts.Cloned;
-      const res = propZTest(succ, n, 0.5);
-      details += `--- ${a.toUpperCase()} classification ---\\n`;
-      details += `Counts: Normal:${counts.Normal}, Cloned:${counts.Cloned} (N=${n})\\n`;
-      details += `Majority label: ${majorityKey} (p_obs=${(res.p*100).toFixed(1)}%) ; z=${fmt(res.z,3)}, p=${fmt(res.pval,4)} ; 95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]\\n\\n`;
+    // per-animal
+    ['pig','sheep','gaur','dog'].forEach(a=>{
+      const counts = DATA[a]; const n = sum(counts);
+      const majKey = counts.Normal >= counts.Cloned ? 'Normal' : 'Cloned';
+      const succ = majKey === 'Normal' ? counts.Normal : counts.Cloned;
+      const r = propZTest(succ, n);
+      out += `${a.toUpperCase()} — Counts: Normal:${counts.Normal}, Cloned:${counts.Cloned} (N=${n})\\n`;
+      out += `Majority: ${majKey} (${(r.p*100).toFixed(1)}%) ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]\\n\\n`;
     });
 
-    // 4) Combined Normal vs Cloned (two-proportion test using combined totals)
+    // combined
     const nCombined = DATA.combined.Normal + DATA.combined.Cloned;
-    const twoCombined = twoPropZ(DATA.combined.Normal, nCombined, DATA.combined.Cloned, nCombined);
-    details += '--- Combined Normal vs Cloned ---\\n';
-    details += `Counts: Normal:${DATA.combined.Normal}, Cloned:${DATA.combined.Cloned} (N=${nCombined})\\n`;
-    details += `Two-proportion test (Normal vs Cloned): diff = ${fmt(twoCombined.diff,3)}, z=${fmt(twoCombined.z,3)}, p=${fmt(twoCombined.pval,4)} ; 95% CI for diff: [${fmt(twoCombined.ci[0],3)}, ${fmt(twoCombined.ci[1],3)}] ; Cohen\\'s h = ${fmt(twoCombined.h,3)}\\n\\n`;
+    const two = twoPropZ(DATA.combined.Normal, nCombined, DATA.combined.Cloned, nCombined);
+    out += `Combined — Normal:${DATA.combined.Normal}, Cloned:${DATA.combined.Cloned} (N=${nCombined})\\n`;
+    out += `Two-prop: diff=${fmt(two.diff,4)} ; z=${fmt(two.z,3)} ; p=${fmt(two.pval,6)} ; 95% CI: [${fmt(two.ci[0],4)}, ${fmt(two.ci[1],4)}] ; Cohen's h=${fmt(two.h,4)}\\n\\n`;
 
-    // 5) Human cloning question (one-sample prop test for No)
-    const nHuman = sum(DATA.human);
-    const resHuman = propZTest(DATA.human.No, nHuman, 0.5);
-    details += '--- Expand cloning research to humans? ---\\n';
-    details += `Counts: Yes:${DATA.human.Yes}, No:${DATA.human.No} (N=${nHuman})\\n`;
-    details += `Observed No proportion = ${(resHuman.p*100).toFixed(1)}% ; z = ${fmt(resHuman.z,3)}, p=${fmt(resHuman.pval,4)} ; 95% CI: [${(resHuman.ci[0]*100).toFixed(1)}%, ${(resHuman.ci[1]*100).toFixed(1)}%]\\n\\n`;
+    // human
+    const nHuman = sum(DATA.human), rh = propZTest(DATA.human.No, nHuman);
+    out += `Human cloning expansion — Yes:${DATA.human.Yes}, No:${DATA.human.No} (N=${nHuman})\\n`;
+    out += `One-sample prop (No vs 0.5): observed p=${(rh.p*100).toFixed(1)}% ; z=${fmt(rh.z,3)} ; p=${fmt(rh.pval,6)} ; 95% CI: [${(rh.ci[0]*100).toFixed(1)}%, ${(rh.ci[1]*100).toFixed(1)}%]\\n\\n`;
 
-    // place into DOM
-    const el = document.getElementById('analysisDetails');
-    if(el) el.innerText = details;
+    document.getElementById('analysisDetails').innerText = out;
   }
 
-  // ------------------------
-  // Quote carousel (below analysis)
-  // ------------------------
+  /* -------------------------
+     Quotes carousel
+     ------------------------- */
   const QUOTES = [
     "You have to consider the reasons why cloning is done. If it’s to save an endangered species, then sure. But if it’s to help the market — cloning animals just to kill them off for profit — that’s wrong. Depending on the intent and the policies/regulations in place, its morality can be debated. The purpose also matters for humans, along with who gets to decide the regulations and rights to do so, assuming it would be safe in the first place.",
     "Cloning for parts is inhumane because the clone — which is also a living organism — is not given a fair chance to live compared to naturally birthed organisms. But for restoration causes, cloning can be a valuable tool in my opinion.",
@@ -768,262 +670,130 @@
     "Cloning animals could be helpful for assisting endangered species or in very special circumstances.",
     "Cloning humans can lead to detrimental outcomes such as ethnic cleansing and genetic mutations."
   ];
-
-  let quoteIndex = 0;
-  function buildQuoteCarousel(){
-    const track = document.getElementById('quoteTrack');
-    if(!track) return;
+  let qIndex = 0;
+  function buildQuotes(){
+    const track = document.getElementById('quoteTrack'); if(!track) return;
     track.innerHTML = '';
-    QUOTES.forEach((q,i)=>{
-      const slide = document.createElement('div');
-      slide.className = 'quote-slide' + (i===0 ? ' active' : '');
-      slide.innerHTML = `<div class="quote-text">${q}</div>`;
-      track.appendChild(slide);
-    });
-    setInterval(()=>{ quoteIndex = (quoteIndex + 1) % QUOTES.length; updateQuotes(); },7000);
-    track.addEventListener('touchstart', e=>{ track._startX = e.touches[0].clientX; });
-    track.addEventListener('touchend', e=>{ const end = e.changedTouches[0].clientX; if(track._startX - end > 50){ quoteIndex = (quoteIndex+1)%QUOTES.length; updateQuotes(); } if(end - track._startX > 50){ quoteIndex = (quoteIndex-1+QUOTES.length)%QUOTES.length; updateQuotes(); } });
+    QUOTES.forEach((q,i)=>{ const div=document.createElement('div'); div.className='quote-slide'+(i===0?' active':''); div.innerHTML=`<div class="quote-text">${q}</div>`; track.appendChild(div); });
+    setInterval(()=>{ qIndex=(qIndex+1)%QUOTES.length; updateQuotes(); },7000);
+    track.addEventListener('touchstart', e=> track._startX = e.touches[0].clientX);
+    track.addEventListener('touchend', e=>{ const end=e.changedTouches[0].clientX; if(track._startX-end>50){ qIndex=(qIndex+1)%QUOTES.length; updateQuotes(); } if(end-track._startX>50){ qIndex=(qIndex-1+QUOTES.length)%QUOTES.length; updateQuotes(); } });
   }
-  function updateQuotes(){ const slides = document.querySelectorAll('.quote-slide'); slides.forEach((s,i)=> s.classList.toggle('active', i===quoteIndex)); const track=document.getElementById('quoteTrack'); if(track) track.style.transform=`translateX(-${quoteIndex*100}%)`; }
-  function wireQuoteButtons(){ document.getElementById('nextQuote').addEventListener('click', ()=>{ quoteIndex = (quoteIndex+1) % QUOTES.length; updateQuotes(); }); document.getElementById('prevQuote').addEventListener('click', ()=>{ quoteIndex = (quoteIndex-1+QUOTES.length)%QUOTES.length; updateQuotes(); }); }
+  function updateQuotes(){ const slides=document.querySelectorAll('.quote-slide'); slides.forEach((s,i)=> s.classList.toggle('active', i===qIndex)); const track=document.getElementById('quoteTrack'); if(track) track.style.transform=`translateX(-${qIndex*100}%)`; }
+  function wireQuoteButtons(){ document.getElementById('nextQuote').addEventListener('click', ()=>{ qIndex=(qIndex+1)%QUOTES.length; updateQuotes(); }); document.getElementById('prevQuote').addEventListener('click', ()=>{ qIndex=(qIndex-1+QUOTES.length)%QUOTES.length; updateQuotes(); }); }
 
-  // ------------------------
-  // Animal image carousel
-  // ------------------------
+  /* -------------------------
+     Animal image carousel
+     ------------------------- */
   function buildAnimalCarousel(){
-    const track = document.getElementById('carouselTrack');
-    if(!track) return;
-    let slide = 0;
-    const total = track.children.length;
+    const track = document.getElementById('carouselTrack'); if(!track) return;
+    let slide=0; const total = track.children.length;
     function setTrack(){ track.style.transform = `translateX(-${slide*100}%)`; }
     window.nextSlide = ()=> { slide = (slide+1) % total; setTrack(); };
     window.prevSlide = ()=> { slide = (slide-1+total) % total; setTrack(); };
     document.getElementById('nextSlide').addEventListener('click', ()=> nextSlide());
     document.getElementById('prevSlide').addEventListener('click', ()=> prevSlide());
     const carousel = document.getElementById('animalCarousel');
-    if(carousel){
-      carousel.addEventListener('touchstart', e=> carousel._startX = e.touches[0].clientX);
-      carousel.addEventListener('touchend', e=>{ const end = e.changedTouches[0].clientX; if(carousel._startX - end > 50) nextSlide(); if(end - carousel._startX > 50) prevSlide(); });
-    }
+    if(carousel){ carousel.addEventListener('touchstart', e=> carousel._startX = e.touches[0].clientX); carousel.addEventListener('touchend', e=>{ const end=e.changedTouches[0].clientX; if(carousel._startX-end>50) nextSlide(); if(end-carousel._startX>50) prevSlide(); }); }
     setInterval(()=> nextSlide(),4200);
   }
 
-  // ------------------------
-  // Tabs
-  // ------------------------
-  function wireTabs(){
-    document.querySelectorAll('.tab').forEach(tab=>{
-      tab.addEventListener('click', ()=>{ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); tab.classList.add('active'); const target = document.querySelector(tab.dataset.target); if(target) target.scrollIntoView({behavior:'smooth', block:'start'}); });
-    });
-  }
+  /* -------------------------
+     Tabs
+     ------------------------- */
+  function wireTabs(){ document.querySelectorAll('.tab').forEach(tab=>{ tab.addEventListener('click', ()=>{ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); tab.classList.add('active'); const target = document.querySelector(tab.dataset.target); if(target) target.scrollIntoView({behavior:'smooth', block:'start'}); }); }); }
 
-  // ------------------------
-  // Modal rendering (statistics)
-  // ------------------------
-  const modal = document.getElementById('modal');
-  const modalContent = document.getElementById('modalContent');
-  function openModal(key){
-    if(!modal) return;
-    modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
-    modalContent.innerHTML = renderStatsModal(key);
-    modalContent.scrollTop = 0;
-  }
+  /* -------------------------
+     Modal & stats details
+     ------------------------- */
+  const modal = document.getElementById('modal'); const modalContent = document.getElementById('modalContent');
+  function openModal(key){ if(!modal) return; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); modalContent.innerHTML = renderStatsModal(key); modalContent.scrollTop = 0; }
   function closeModal(){ if(!modal) return; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); modalContent.innerHTML=''; }
-  function wireModalClose(){ const close = document.querySelector('.modal-close'); if(close) close.addEventListener('click', closeModal); if(modal) modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); }); }
+  function wireModalClose(){ const close = document.querySelector('.modal-close'); if(close) close.addEventListener('click', closeModal); if(modal) modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); }); }
 
-  // modal content generator
   function renderStatsModal(key){
-    if(key === 'shouldCloneStats'){
-      const n = sum(DATA.shouldClone);
-      const chi = chiSquare(Object.values(DATA.shouldClone));
-      const pChi = chi2pApprox(chi, Object.values(DATA.shouldClone).length - 1);
-      return `<h3>Should animals be cloned? — Full statistical output</h3>
-        <p>Counts: ${Object.entries(DATA.shouldClone).map(([k,v])=>`${k}:${v}`).join(', ')} (N=${n})</p>
-        <p>Percentages: ${Object.entries(percent(DATA.shouldClone)).map(([k,v])=>`${k}:${v}%`).join(', ')}</p>
-        <p>Chi-square goodness-of-fit: χ² = ${fmt(chi,4)}, approx p = ${pChi.toFixed(6)}.</p>
-        <p>Interpretation: If p &gt; .05, we cannot reject the null of equal distribution across categories. However, many 'Maybe' responses suggest conditionality.</p>`;
-    }
-    if(key === 'humaneStats'){
-      const n = sum(DATA.humane);
-      const res = propZTest(DATA.humane.Yes, n, 0.5);
-      return `<h3>Is cloning animals humane? — Full statistical output</h3>
-        <p>Counts: Yes:${DATA.humane.Yes}, No:${DATA.humane.No} (N=${n})</p>
-        <p>Observed Yes proportion: ${(res.p*100).toFixed(1)}% ; z=${fmt(res.z,3)} ; p=${fmt(res.pval,6)}</p>
-        <p>95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]</p>`;
-    }
-
-    if(key === 'pigStats'){
-      const n = sum(DATA.pig), res = propZTest(DATA.pig.Normal, n);
-      return `<h3>Pig — Statistical output</h3>
-        <p>Counts: Normal:${DATA.pig.Normal}, Cloned:${DATA.pig.Cloned} (N=${n})</p>
-        <p>Observed Normal proportion: ${(res.p*100).toFixed(1)}% ; z=${fmt(res.z,3)} ; p=${fmt(res.pval,6)}</p>
-        <p>95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]</p>`;
-    }
-
-    if(key === 'sheepStats'){
-      const n = sum(DATA.sheep), res = propZTest(DATA.sheep.Cloned, n);
-      return `<h3>Sheep — Statistical output</h3>
-        <p>Counts: Normal:${DATA.sheep.Normal}, Cloned:${DATA.sheep.Cloned} (N=${n})</p>
-        <p>Observed Cloned proportion: ${(res.p*100).toFixed(1)}% ; z=${fmt(res.z,3)} ; p=${fmt(res.pval,6)}</p>
-        <p>95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]</p>`;
-    }
-
-    if(key === 'gaurStats'){
-      const n = sum(DATA.gaur), res = propZTest(DATA.gaur.Cloned, n);
-      return `<h3>Gaur — Statistical output</h3>
-        <p>Counts: Normal:${DATA.gaur.Normal}, Cloned:${DATA.gaur.Cloned} (N=${n})</p>
-        <p>Observed Cloned proportion: ${(res.p*100).toFixed(1)}% ; z=${fmt(res.z,3)} ; p=${fmt(res.pval,6)}</p>
-        <p>95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]</p>`;
-    }
-
-    if(key === 'dogStats'){
-      const n = sum(DATA.dog), res = propZTest(DATA.dog.Normal, n);
-      return `<h3>Dog — Statistical output</h3>
-        <p>Counts: Normal:${DATA.dog.Normal}, Cloned:${DATA.dog.Cloned} (N=${n})</p>
-        <p>Observed Normal proportion: ${(res.p*100).toFixed(1)}% ; z=${fmt(res.z,3)} ; p=${fmt(res.pval,6)}</p>
-        <p>95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]</p>`;
-    }
-
-    if(key === 'combinedStats'){
-      const n = DATA.combined.Normal + DATA.combined.Cloned;
-      const two = twoPropZ(DATA.combined.Normal, n, DATA.combined.Cloned, n);
-      return `<h3>Combined — Statistical output</h3>
-        <p>Counts: Normal:${DATA.combined.Normal}, Cloned:${DATA.combined.Cloned} (N=${n})</p>
-        <p>Two-proportion test results: diff=${fmt(two.diff,4)}, z=${fmt(two.z,4)}, p=${fmt(two.pval,6)}; 95% CI: [${fmt(two.ci[0],4)}, ${fmt(two.ci[1],4)}]; Cohen's h=${fmt(two.h,4)}</p>`;
-    }
-
-    if(key === 'humanStats'){
-      const n = sum(DATA.human), res = propZTest(DATA.human.No, n);
-      return `<h3>Human cloning — Statistical output</h3>
-        <p>Counts: Yes:${DATA.human.Yes}, No:${DATA.human.No} (N=${n})</p>
-        <p>Observed No proportion: ${(res.p*100).toFixed(1)}% ; z=${fmt(res.z,3)} ; p=${fmt(res.pval,6)}</p>
-        <p>95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]</p>`;
-    }
-
-    return `<pre>No stats available for ${key}</pre>`;
+    if(key==='shouldCloneStats'){ const n = sum(DATA.shouldClone), chi = chiSquare(Object.values(DATA.shouldClone)), pchi = chi2pApprox(chi); return `<h3>Should animals be cloned? — Stats</h3><p>Counts: ${Object.entries(DATA.shouldClone).map(([k,v])=>`${k}:${v}`).join(', ')} (N=${n})</p><p>Chi² = ${fmt(chi,4)}, approx p = ${pchi.toFixed(6)}</p><p>Interpretation: plurality for Yes but many conditional responses indicate opinions depend on scenario.</p>`; }
+    if(key==='humaneStats'){ const n=sum(DATA.humane), r=propZTest(DATA.humane.Yes,n); return `<h3>Is cloning humane? — Stats</h3><p>Yes:${DATA.humane.Yes}, No:${DATA.humane.No} (N=${n})</p><p>p_obs=${(r.p*100).toFixed(1)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]</p>`; }
+    if(key==='pigStats'){ const n=sum(DATA.pig), r=propZTest(DATA.pig.Normal,n); return `<h3>Pig — Stats</h3><p>Normal:${DATA.pig.Normal}, Cloned:${DATA.pig.Cloned} (N=${n})</p><p>p=${(r.p*100).toFixed(1)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]</p>`; }
+    if(key==='sheepStats'){ const n=sum(DATA.sheep), r=propZTest(DATA.sheep.Cloned,n); return `<h3>Sheep — Stats</h3><p>Normal:${DATA.sheep.Normal}, Cloned:${DATA.sheep.Cloned} (N=${n})</p><p>p=${(r.p*100).toFixed(1)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]</p>`; }
+    if(key==='gaurStats'){ const n=sum(DATA.gaur), r=propZTest(DATA.gaur.Cloned,n); return `<h3>Gaur — Stats</h3><p>Normal:${DATA.gaur.Normal}, Cloned:${DATA.gaur.Cloned} (N=${n})</p><p>p=${(r.p*100).toFixed(1)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]</p>`; }
+    if(key==='dogStats'){ const n=sum(DATA.dog), r=propZTest(DATA.dog.Normal,n); return `<h3>Dog — Stats</h3><p>Normal:${DATA.dog.Normal}, Cloned:${DATA.dog.Cloned} (N=${n})</p><p>p=${(r.p*100).toFixed(1)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]</p>`; }
+    if(key==='combinedStats'){ const n = DATA.combined.Normal + DATA.combined.Cloned, two = twoPropZ(DATA.combined.Normal,n,DATA.combined.Cloned,n); return `<h3>Combined — Stats</h3><p>Normal:${DATA.combined.Normal}, Cloned:${DATA.combined.Cloned} (N=${n})</p><p>diff=${fmt(two.diff,4)}, z=${fmt(two.z,3)}, p=${fmt(two.pval,6)} ; 95% CI: [${fmt(two.ci[0],4)}, ${fmt(two.ci[1],4)}] ; Cohen's h=${fmt(two.h,4)}</p>`; }
+    if(key==='humanStats'){ const n=sum(DATA.human), r=propZTest(DATA.human.No,n); return `<h3>Human cloning — Stats</h3><p>Yes:${DATA.human.Yes}, No:${DATA.human.No} (N=${n})</p><p>Observed No p=${(r.p*100).toFixed(1)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]</p>`; }
+    return `<pre>No stats for ${key}</pre>`;
   }
 
-  // ------------------------
-  // Export and download
-  // ------------------------
+  /* -------------------------
+     Export & download
+     ------------------------- */
   function exportCSV(){
-    const rows = [
-      ['Question','Option','Count'],
-      ['Should animals be cloned?','Yes', DATA.shouldClone.Yes],
-      ['Should animals be cloned?','Maybe', DATA.shouldClone.Maybe],
-      ['Should animals be cloned?','No', DATA.shouldClone.No],
-      ['Should animals be cloned?','Unopposed', DATA.shouldClone.Unopposed],
-      ['Is cloning humane?','Yes', DATA.humane.Yes],
-      ['Is cloning humane?','No', DATA.humane.No],
-      ['Pig','Normal', DATA.pig.Normal],
-      ['Pig','Cloned', DATA.pig.Cloned],
-      ['Sheep','Normal', DATA.sheep.Normal],
-      ['Sheep','Cloned', DATA.sheep.Cloned],
-      ['Gaur','Normal', DATA.gaur.Normal],
-      ['Gaur','Cloned', DATA.gaur.Cloned],
-      ['Dog','Normal', DATA.dog.Normal],
-      ['Dog','Cloned', DATA.dog.Cloned],
-      ['Human cloning','Yes', DATA.human.Yes],
-      ['Human cloning','No', DATA.human.No]
+    const rows = [['Question','Option','Count'],
+      ['Should animals be cloned?','Yes',DATA.shouldClone.Yes],
+      ['Should animals be cloned?','Maybe',DATA.shouldClone.Maybe],
+      ['Should animals be cloned?','No',DATA.shouldClone.No],
+      ['Should animals be cloned?','Unopposed',DATA.shouldClone.Unopposed],
+      ['Is cloning humane?','Yes',DATA.humane.Yes], ['Is cloning humane?','No',DATA.humane.No],
+      ['Pig','Normal',DATA.pig.Normal], ['Pig','Cloned',DATA.pig.Cloned],
+      ['Sheep','Normal',DATA.sheep.Normal], ['Sheep','Cloned',DATA.sheep.Cloned],
+      ['Gaur','Normal',DATA.gaur.Normal], ['Gaur','Cloned',DATA.gaur.Cloned],
+      ['Dog','Normal',DATA.dog.Normal], ['Dog','Cloned',DATA.dog.Cloned],
+      ['Human cloning','Yes',DATA.human.Yes], ['Human cloning','No',DATA.human.No]
     ];
-    const csv = rows.map(r=> r.map(c=> `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
+    const csv = rows.map(r=> r.map(c=> `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type:'text/csv' }); const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href = url; a.download = 'cloning_survey_export.csv'; a.click(); URL.revokeObjectURL(url);
   }
 
   function downloadAnalysis(){
-    const analysisText = `
-Cloning Survey Research Project — Analysis Report
-Created by Arya Ravikumar (2025)
-
-SUMMARY:
-N = ${sum(DATA.shouldClone)} participants.
-Should animals be cloned? ${Object.entries(percent(DATA.shouldClone)).map(([k,v])=>`${k}:${v}%`).join(', ')}
-Is cloning humane? ${Object.entries(percent(DATA.humane)).map(([k,v])=>`${k}:${v}%`).join(', ')}
-Combined Normal: ${DATA.combined.Normal}, Cloned: ${DATA.combined.Cloned}
-
-Detailed statistical outputs are embedded on the site.
-`;
-    const blob = new Blob([analysisText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'cloning_survey_analysis.txt'; a.click(); URL.revokeObjectURL(url);
+    const text = `Cloning Survey Analysis - Arya Ravikumar (2025)\\n\\nSummary:\\n${document.getElementById('summaryText').innerText}\\n\\nDetailed:\\n${document.getElementById('analysisDetails').innerText}`;
+    const blob = new Blob([text], { type:'text/plain' }); const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'cloning_analysis.txt'; a.click(); URL.revokeObjectURL(url);
   }
 
-  // ------------------------
-  // calculators wiring
-  // ------------------------
+  /* -------------------------
+     Calculators
+     ------------------------- */
   function computeChi2(){
-    const a = Number(document.getElementById('chi_a').value || 0);
-    const b = Number(document.getElementById('chi_b').value || 0);
-    const c = Number(document.getElementById('chi_c').value || 0);
-    const d = Number(document.getElementById('chi_d').value || 0);
-    const total = a + b + c + d;
-    if(total === 0){ document.getElementById('chi_out').innerText = 'Please enter positive numbers.'; return; }
-    const row1 = a + b, row2 = c + d, col1 = a + c, col2 = b + d;
-    const expA = row1 * col1 / total, expB = row1 * col2 / total, expC = row2 * col1 / total, expD = row2 * col2 / total;
-    const chi = (a - expA)**2 / (expA || 1e-9) + (b - expB)**2 / (expB || 1e-9) + (c - expC)**2 / (expC || 1e-9) + (d - expD)**2 / (expD || 1e-9);
-    const p = chi2pApprox(chi, 1);
-    document.getElementById('chi_out').innerText = `Chi² ≈ ${chi.toFixed(4)}; approx p ≈ ${p.toFixed(4)} (df=1 approximate)`;
+    const a = Number(document.getElementById('chi_a').value||0), b = Number(document.getElementById('chi_b').value||0);
+    const c = Number(document.getElementById('chi_c').value||0), d = Number(document.getElementById('chi_d').value||0);
+    const total = a+b+c+d; if(total===0){ document.getElementById('chi_out').innerText='Enter positive numbers'; return; }
+    const row1 = a+b, row2 = c+d, col1 = a+c, col2 = b+d;
+    const expA = row1*col1/total, expB = row1*col2/total, expC = row2*col1/total, expD = row2*col2/total;
+    const chi = (a-expA)**2/(expA||1e-9) + (b-expB)**2/(expB||1e-9) + (c-expC)**2/(expC||1e-9) + (d-expD)**2/(expD||1e-9);
+    const p = chi2pApprox(chi);
+    document.getElementById('chi_out').innerText = `χ² ≈ ${chi.toFixed(4)} ; approx p ≈ ${p.toFixed(4)}`;
   }
 
   function computePropZ(){
-    const s = Number(document.getElementById('pz_success').value || 0);
-    const n = Number(document.getElementById('pz_n').value || 1);
-    const p0 = Number(document.getElementById('pz_p0').value || 0.5);
-    if(n <= 0){ document.getElementById('pz_out').innerText = 'n must be > 0'; return; }
-    const res = propZTest(s,n,p0);
-    document.getElementById('pz_out').innerText = `Observed p=${(res.p*100).toFixed(1)}%; z=${fmt(res.z,3)}, p=${fmt(res.pval,4)}; 95% CI: [${(res.ci[0]*100).toFixed(1)}%, ${(res.ci[1]*100).toFixed(1)}%]`;
+    const s = Number(document.getElementById('pz_success').value||0), n = Number(document.getElementById('pz_n').value||1), p0 = Number(document.getElementById('pz_p0').value||0.5);
+    if(n<=0){ document.getElementById('pz_out').innerText='n must be > 0'; return; }
+    const r = propZTest(s,n,p0); document.getElementById('pz_out').innerText = `p=${(r.p*100).toFixed(1)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(1)}%, ${(r.ci[1]*100).toFixed(1)}%]`;
   }
 
   function computeTwoProp(){
-    const s1 = Number(document.getElementById('tp_s1').value || 0);
-    const n1 = Number(document.getElementById('tp_n1').value || 1);
-    const s2 = Number(document.getElementById('tp_s2').value || 0);
-    const n2 = Number(document.getElementById('tp_n2').value || 1);
-    if(n1 <= 0 || n2 <= 0){ document.getElementById('tp_out').innerText = 'n1 and n2 must be > 0'; return; }
-    const res = twoPropZ(s1,n1,s2,n2);
-    document.getElementById('tp_out').innerText = `p1=${(res.p1*100).toFixed(1)}%, p2=${(res.p2*100).toFixed(1)}%; diff=${(res.diff*100).toFixed(2)}% (z=${fmt(res.z,3)}, p=${fmt(res.pval,4)}); 95% CI: [${(res.ci[0]*100).toFixed(2)}%, ${(res.ci[1]*100).toFixed(2)}%] ; Cohen's h=${fmt(res.h,3)}`;
+    const s1 = Number(document.getElementById('tp_s1').value||0), n1 = Number(document.getElementById('tp_n1').value||1);
+    const s2 = Number(document.getElementById('tp_s2').value||0), n2 = Number(document.getElementById('tp_n2').value||1);
+    if(n1<=0||n2<=0){ document.getElementById('tp_out').innerText='n1,n2 must be > 0'; return; }
+    const r = twoPropZ(s1,n1,s2,n2); document.getElementById('tp_out').innerText = `p1=${(r.p1*100).toFixed(1)}%, p2=${(r.p2*100).toFixed(1)}% ; diff=${(r.diff*100).toFixed(2)}% ; z=${fmt(r.z,3)} ; p=${fmt(r.pval,6)} ; 95% CI: [${(r.ci[0]*100).toFixed(2)}%, ${(r.ci[1]*100).toFixed(2)}%] ; Cohen's h=${fmt(r.h,4)}`;
   }
 
-  // ------------------------
-  // light/dark toggle
-  // ------------------------
-  function toggleMode(){
-    document.body.classList.toggle('light-mode');
-    const btn = document.getElementById('modeToggle');
-    const pressed = document.body.classList.contains('light-mode');
-    btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
-    btn.innerText = pressed ? 'Light Mode' : 'Toggle Light Mode';
-  }
+  /* -------------------------
+     Toggle
+     ------------------------- */
+  function toggleMode(){ document.body.classList.toggle('light-mode'); const btn = document.getElementById('modeToggle'); const on = document.body.classList.contains('light-mode'); btn.setAttribute('aria-pressed', on?'true':'false'); btn.innerText = on ? 'Light Mode' : 'Toggle Light Mode'; }
 
-  // ------------------------
-  // finish wiring UI events after DOM loaded (defensive)
-  // ------------------------
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('prevQuote')?.addEventListener('click', ()=>{ quoteIndex = (quoteIndex-1+QUOTES.length)%QUOTES.length; updateQuotes(); });
-    document.getElementById('nextQuote')?.addEventListener('click', ()=>{ quoteIndex = (quoteIndex+1)%QUOTES.length; updateQuotes(); });
-    document.getElementById('prevSlide')?.addEventListener('click', ()=> window.prevSlide && window.prevSlide());
-    document.getElementById('nextSlide')?.addEventListener('click', ()=> window.nextSlide && window.nextSlide());
-    // pre-wire calculator buttons (in case)
-    document.querySelectorAll('.export-btn').forEach(()=>{});
+  /* -------------------------
+     UI wiring after DOM loaded
+     ------------------------- */
+  document.addEventListener('DOMContentLoaded', ()=>{
+    try{
+      document.getElementById('prevQuote').addEventListener('click', ()=>{ qIndex=(qIndex-1+QUOTES.length)%QUOTES.length; updateQuotes(); });
+      document.getElementById('nextQuote').addEventListener('click', ()=>{ qIndex=(qIndex+1)%QUOTES.length; updateQuotes(); });
+      document.getElementById('prevSlide').addEventListener('click', ()=> window.prevSlide && window.prevSlide());
+      document.getElementById('nextSlide').addEventListener('click', ()=> window.nextSlide && window.nextSlide());
+      wireTabs(); wireModalClose();
+    } catch(e){ console.warn('UI wire error', e); }
   });
-
-  // ------------------------
-  // Expose some functions for debugging
-  // ------------------------
-  window.exportCSV = exportCSV;
-  window.downloadAnalysis = downloadAnalysis;
-  window.computeChi2 = computeChi2;
-  window.computePropZ = computePropZ;
-  window.computeTwoProp = computeTwoProp;
-  window.openModal = openModal;
-  window.closeModal = closeModal;
-
-  </script>
-</body>
-</html>
-
   </script>
 </body>
 </html>
